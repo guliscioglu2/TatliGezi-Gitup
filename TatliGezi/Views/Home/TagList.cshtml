@@ -1,0 +1,205 @@
+﻿
+@{
+    ViewBag.Title = "TagList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@model TatliGezi.Models.MultipleData.MainPage
+
+<style>
+    iframe {
+        border: none;
+        position: absolute;
+        display: block;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: #000;
+    }
+
+    audio {
+        width: -webkit-fill-available;
+        height: 35px;
+    }
+
+    .filter-green {
+        fill: red !important;
+    }
+
+    body {
+        margin: 2rem;
+    }
+
+    .modal-dialog {
+        max-width: 800px;
+        margin: 30px auto;
+    }
+
+
+
+    .modal-body {
+        position: relative;
+        padding: 0px;
+    }
+
+    .close {
+        position: absolute;
+        right: -30px;
+        top: 0;
+        z-index: 999;
+        font-size: 2rem;
+        font-weight: normal;
+        color: #fff;
+        opacity: 1;
+    }
+</style>
+
+<head>
+    <!-- ========== SEO ========== -->
+    <title>Tatlı Gezi Hakkımızda</title>
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+    <meta content="" name="author">
+
+
+
+</head>
+
+<!-- ========== HEADER ========== -->
+@Html.Partial("_Header", Model)
+
+
+<!-- ========== FEATURED ARTICLES ========== -->
+
+<main class="blog">
+    <div class="container">
+
+        <div class="row">
+            <!-- POSTS -->
+            <div class="col-md-9" id="ajax-main">
+                @Html.Partial("_AnotherArticle", Model)
+            </div>
+            <!-- SIDEBAR -->
+            <div class="col-md-3">
+                @Html.Partial("_RightHeader", Model)
+
+            </div>
+        </div>
+
+    </div>
+</main>
+
+<!-- ========== FOOTER ========== -->
+@Html.Partial("_Footer", Model)
+
+
+<!-- ========== BACK TO TOP ========== -->
+<div id="back-to-top">
+    <i class="fa fa-angle-up" aria-hidden="true"></i>
+</div>
+
+<!-- ========== SEARCH ========== -->
+<div class="fullscreen-search open-search">
+    <div class="inner">
+
+
+        <form class="search-form" method="get">
+
+            <div class="search-title">
+                <h1 class="title">Aramaya Başla</h1>
+                @*<h1 class="title-down">Aranıyor...</h1>*@
+            </div>
+            <fieldset class="field-container">
+
+                <input type="text" name="SearchString" placeholder="Arama..." class="field form-control" />
+                <div class="icons-container">
+                    <div class="icon-search"><i class="fa fa-search" aria-hidden="true"></i></div>
+                    <div class="icon-close"><i class="fa fa-times" aria-hidden="true"></i></div>
+                </div>
+            </fieldset>
+
+        </form>
+
+    </div>
+    <button class="search-close" type="submit"><i class="fa fa-times"></i></button>
+
+
+</div>
+
+
+@section js
+{
+
+    <script src="~/Scripts/DeleteProduct.js"></script>
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+
+            // Gets the video src from the data-src on each button
+
+            var $videoSrc;
+            $('.video-btn').click(function () {
+                $videoSrc = $(this).data("src");
+            });
+            console.log($videoSrc);
+
+
+
+            // when the modal is opened autoplay it
+            $('#myModal').on('shown.bs.modal', function (e) {
+
+                // set the video src to autoplay and not to show related video. Youtube related video is like a box of chocolates... you never know what you're gonna get
+                $("#video").attr('src', $videoSrc + "?autoplay=1&amp;modestbranding=1&amp;showinfo=0");
+            })
+
+
+
+            // stop playing the youtube video when I close the modal
+            $('#myModal').on('hide.bs.modal', function (e) {
+                // a poor man's stop video
+                $("#video").attr('src', $videoSrc);
+            })
+
+
+        });
+
+
+
+    </script>
+
+
+    <script type="text/javascript">
+        var pageNo = 1;
+        var isPageLoad = true;
+        $(window).scroll(function () {
+            if ($(window).scrollTop() == $(document).height() - $(window).height()) {
+                if (isPageLoad) {
+                    $.ajax({
+                        url: '/Home/Index',
+                        data: { page: pageNo },
+                        success: function (data) {
+                            $("#ajax-main").append(data);
+                            pageNo++;
+                            if ($.trim(data) == '') {
+                                isPageLoad = false;
+                            }
+                        }
+                    });
+                }
+            }
+        });
+
+    </script>
+
+
+}
+
+
+
+
+
+
+
+

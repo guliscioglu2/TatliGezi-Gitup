@@ -1,0 +1,292 @@
+﻿
+@{
+    ViewBag.Title = "AddAdress";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+@model TatliGezi.Models.Shop.UserAdress
+
+<head>
+    <!-- ========== SEO ========== -->
+    <title>Tatli Gezi - Kullanıcı Teslimat Adresi Ekle</title>
+
+    <meta content="Kullanıcı adres bilgisi ekleme " name="description">
+    <meta content="Adres ekle, teslimat adresi ekle, kullanıcı adresi ekle " name="keywords">
+    <meta content="Gül İşçioğlu" name="author">
+
+
+
+
+</head>
+<!-- ========== HEADER ========== -->
+@Html.Partial("_Header", Model)
+<style>
+    .selectpicker {
+        width: 100% !important;
+    }
+    .dropdown-menu > li > a {
+        color: #575757 !important;
+    }
+
+    .widget {
+        margin-top: 85px !important;
+    }
+</style>
+
+<!-- =========== PAGE TITLE ========== -->
+<div class="page-title">
+    <div class="container">
+        <div class="inner">
+            <h1>Adres Ekle</h1>
+            <ol class="breadcrumb">
+                <li><a href="/anasayfa/">AnaSayfa</a></li>
+                <li><a href="/magaza/">Mağaza</a></li>
+                <li>Adres Ekle</li>
+            </ol>
+        </div>
+    </div>
+</div>
+
+<!-- =========== MAIN ========== -->
+
+@using (Html.BeginForm())
+{
+
+
+
+
+    <div class="container" style="margin-bottom:20px;">
+        <div class="row">
+            <div class="col-lg-9">
+                <form method="post">
+
+
+                    <div class="product-tabs mt50">
+                        <!-- Nav tabs -->
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li role="presentation" class="active"><a href="#description" aria-controls="description" role="tab" data-toggle="tab">Adres Ekle</a></li>
+                        </ul>
+                        <div class="tab-content">
+                            <!-- TAB -->
+                            <div role="tabpanel" class="tab-pane active" id="description">
+                                <div class="form-group mb30">
+
+                                    @Html.TextBoxFor(x => x.Title, new { @class = "form-control ", placeholder = "Adres Başlığı" })
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="form-group mb30">
+
+                                            <select style="width: auto;" class="form-control selectpicker" title="Lütfen İl Seçiniz" id="myCityselect" , onchange="callChangefunc(this.value)" name="myCityselect">
+                                                <option selected disabled value="0">Lütfen İl Seçiniz</option>'
+                                            </select>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group mb30">
+
+                                            <select style="width: auto;" class="form-control selectpicker" title="Lütfen İlçe Seçiniz" id="myselect" name="myselect">
+                                                <option selected disabled value="0">Lütfen İlçe Seçiniz</option>'
+                                            </select>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div class="form-group mb30">
+                                    @Html.TextAreaFor(x => x.AdressDetail, new { @class = "form-control", placeholder = "Adres" })
+                                </div>
+                                <div class="form-group mb30">
+                                    @Html.TextBoxFor(x => x.PostCode, new { @class = "form-control", placeholder = "Posta Kodu" })
+                                </div>
+
+
+                            </div>
+                            <div colspan="50" class="a-right pt50">
+                                <input type="submit" name="name" class="btn md green" value="Kaydet" />
+                            </div>
+                        </div>
+
+
+
+
+                    </div>
+
+                    @*<button type="submit" class="btn pink pull-right mt50">Proceed to Checkout</button>*@
+                </form>
+            </div>
+            <div class="col-lg-3">
+                @*@Html.Partial("_PaymentRightHeader", Model)*@
+                <aside class="widget mb30">
+                    <h4 class="widget-title">SİPARİŞ ÖZETİ</h4>
+
+                    <div class="inner">
+
+                        <ul class="categories">
+
+
+                            <li style="border-bottom: none !important;"><a> Ürün Toplamı: <span class="pull-right" style="font-weight: bold;"> @ViewData["TotalPrice"] &#8378;</span></a></li>
+
+                            <li><a>Kargo Toplam: <span class="pull-right" style="font-weight: bold;"> @ViewData["CargoPrice"] &#8378;</span></a></li>
+
+                            <li><a>Toplam: <span class="pull-right" style="font-weight: bold;"> @ViewData["TotalPayment"] &#8378;</span></a></li>
+
+                        </ul>
+
+                        <div colspan="50" class="a-right pt50" style=" padding-top: 30px; margin-bottom: 30px;">
+
+                            @if (Request.Cookies["Member"] == null)
+                            {
+                                <a href="/girisyap" class="btn md green">SEPETİ ONAYLA</a>
+
+                            }
+                            else
+                            {
+                                if (ViewData["Adress"] != null)
+                                {
+                                    <a href="/adresbilgisi" class="btn md green">SEPETİ ONAYLA</a>
+
+                                }
+                                else
+                                {
+                                    <a href="/adresekle" class="btn md green">SEPETİ ONAYLA</a>
+                                }
+
+
+                            }
+
+
+
+                        </div>
+                    </div>
+
+                </aside>
+            </div>
+        </div>
+    </div>
+}
+<!-- ========== FOOTER ========== -->
+@Html.Partial("_Footer", Model)
+
+
+<!-- ========== BACK TO TOP ========== -->
+<div id="back-to-top">
+    <i class="fa fa-angle-up" aria-hidden="true"></i>
+</div>
+
+
+
+
+@*<link href="~/Content/bootstrap-select-1.13.14/dist/css/bootstrap-select.min.css" rel="stylesheet" />*@
+
+@section js{
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/css/bootstrap-select.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/js/bootstrap-select.min.js"></script>`
+
+    @*<script src="~/Content/bootstrap-select-1.13.14/dist/js/bootstrap-select.min.js"></script>*@
+
+    @*<script src="~/Content/bootstrap-select-1.13.14/dist/js/i18n/defaults-tr_TR.min.js"></script>*@
+
+    <script>
+        $(document).ready(function () {
+            $.ajax({
+                type: "POST",
+                url: "/Order/CityList",
+                dataType: "json",
+                traditional: true,
+                error: function (xhr, status, error) {
+                    alert("no")
+                },
+                success: function (data) {
+
+
+                    $.each(data, function (index, value) {
+
+                        $("#myCityselect").selectpicker();
+
+                        var newitemnum = value.ID;
+                        var newitemdesc = value.CityName;
+                        //$("#myCityselect").append('<option value="' + newitemnum + '" selected="">' + newitemdesc + '</option>');
+
+                        $("#myCityselect").append(new Option(newitemdesc, newitemnum));
+
+                        //selectTags = myForm.getElementsByTagName("select");
+
+                        //for (var i = 0; i < data.length; i++) {
+                        //    data[i].selectedIndex = 0;
+                        //}  
+
+                        $("#myCityselect").selectpicker("refresh");
+
+                    });
+
+                }
+            });
+
+
+        });
+
+    </script>
+    <script>
+
+        function callChangefunc(val) {
+
+            $(function () {
+
+
+                $("#city").selectpicker();
+
+                var groupFilter = $('#myselect');
+                groupFilter.selectpicker('val', '');
+                groupFilter.find('option').remove();
+                groupFilter.selectpicker("refresh");
+
+
+                $.ajax({
+                    type: "POST",
+                    url: "/Order/TownList",
+                    data: { val: val },
+                    dataType: "json",
+                    traditional: true,
+                    error: function (xhr, status, error) {
+                        alert("no")
+                    },
+                    success: function (data) {
+
+
+                        $.each(data, function (index, value) {
+
+                            $("#myselect").selectpicker();
+
+                            var newitemnum = value.ID;
+                            var newitemdesc = value.TownName;
+                            //$("#myselect").append('<option value="' + newitemnum + '" selected="">' + newitemdesc + '</option>');
+                            $("#myselect").append(new Option(newitemdesc, newitemnum));
+
+                            $("#myselect").selectpicker("refresh");
+
+                        });
+
+                    }
+                });
+
+
+            });
+        }
+
+    </script>
+
+
+}
+
+
+
+
+
+
+
+
+

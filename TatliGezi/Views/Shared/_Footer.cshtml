@@ -1,0 +1,56 @@
+﻿
+@using TatliGezi.SeoSetting
+
+<footer>
+    <div class="footer-widgets">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3 col-sm-6 f-widget">
+                    <img src="~/Images/Logo/logoBlog.png" width="100" class="f-logo" alt="Logo" />
+                    <div class="inner">
+                        <ul class="useful-links">
+                            <li><a href="/mesafeli-satis-sozlesmesi/" class="link-hover">Mesafeli Satış Sözleşmesi</a></li>
+                            <li><a href="/teslimat-ve-iade/" class="link-hover">Teslimat Ve İade</a></li>
+                            <li><a href="/gizlilik-politikasi/" class="link-hover">Gizlilik Politikası</a></li>
+                            <li><img src="~/Images/Footer/iyzico ile Ode.svg" /> </li>
+                        </ul>
+                    </div>
+
+                </div>
+                <div class="col-md-3 col-sm-6 f-widget">
+                    <h3>SON GÖNDERİLER</h3>
+                    <div class="inner">
+                        <ul class="latest-posts">
+                            @foreach (var item in ViewData["LastList"] as IList<TatliGezi.Models.Article>)
+                            {
+                                <li><a href="/blog/@Seo.EditAdress(item.ArticleTitle)/" class="link-hover">@item.ArticleTitle</a></li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-2 col-sm-6 f-widget">
+                    <h3>LİNKLER</h3>
+                    <div class="inner">
+                        <ul class="useful-links">
+                            <li><a href="/hakkımda/" class="link-hover">Hakkımda</a></li>
+                            <li><a href="/iletisim/" class="link-hover">Bana Ulaş</a></li>
+                            @*<li><a href="/Galeri/" class="link-hover">Galeri</a></li>*@
+                            <li><a href="/magaza/" class="link-hover">Mağaza</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6 f-widget">
+                    <div class="inner">
+
+                        <img src="~/Images/Footer/logo-band.svg" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="subfooter">
+        <div class="container">
+            <div class="copyrights">&copy; 2021 <a href="index.html" class="link-hover">TatliGezi</a> Tüm hakları Saklıdır.</div>
+        </div>
+    </div>
+</footer>

@@ -1,0 +1,146 @@
+﻿
+@{
+    ViewBag.Title = "PrevSave";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+
+@{
+    ViewBag.Title = "PrevSave";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+@model TatliGezi.Models.MultipleData.ArticlePreview
+
+
+
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            @if (ViewBag.Durum == -1)
+            {
+                <div class="alert alert-danger">Ooopsss!...Lütfen Gerekli Alanları Doldurunuz.</div>
+            }
+
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-lg-6">
+                        @using (Html.BeginForm(null, null, FormMethod.Post, new { @enctype = "multipart/form-data" }))
+                        {
+                            if (Model.preview.FormatID == 1)
+                            {
+                                <p>Standart</p>
+
+                                @Html.Partial("Partial/StandartPrev")
+
+
+                            }
+
+                            if (Model.preview.FormatID == 2)
+                            {
+                                <p>Audio</p>
+
+                                @Html.Partial("Partial/AudioPrev")
+
+
+                            }
+                            if (Model.preview.FormatID == 3)
+                            {
+                                <p>Video</p>
+
+                                @Html.Partial("Partial/VideoPrev")
+
+
+                            }
+                            if (Model.preview.FormatID == 4)
+                            {
+                                <p>Galeri</p>
+
+                                @Html.Partial("Partial/GalleryPrev")
+
+
+                            }
+                            if (Model.preview.FormatID == 5)
+                            {
+                                <p>Quote</p>
+
+                                @Html.Partial("Partial/QuotePrev")
+
+
+                            }
+                            if (Session["Article"] != null)
+                            {
+                                <input type="submit" name="command" class="btn btn-primary" value="Kaydet" />
+                                <input type="submit" name="command" class="btn btn-info" value="Ön izleme" />
+                            }
+                            else
+                            {
+                                <input type="submit" name="command" class="btn btn-primary" value="Yayınla" />
+                                <input type="submit" name="command" class="btn btn-info" value="Ön izleme" />
+                                <input type="submit" name="command" class="btn btn-default" value="Taslak Olarak Kaydet" />
+                            }
+                            @*<input type="submit" name="command" class="btn btn-primary" value="Kaydet" />
+                                <input type="submit" name="command" class="btn btn-info" value="Ön izleme" />*@
+
+
+                        }
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Test Listesi</h4>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script>
+    function copyToClipboard(element) {
+        var $temp = $("<input>");
+        $("body").append($temp);
+        $temp.val($(element).text()).select();
+        document.execCommand("copy");
+        $temp.remove();
+    }
+</script>
+
+<script src="~/Content/Admin1/vendor/jquery/jquery.min.js"></script>
+<script src="~/Content/Admin1/vendor/bootstrap/js/bootstrap.min.js"></script>
+<script src="~/CK8/ckeditor/ckeditor.js"></script>
+
+<script>
+    $(document).ready(function () {
+
+        $(".form-group input").addClass("form-control");
+        CKEDITOR.replace("preview.ArticleContent", {
+
+            filebrowserBrowseUrl: '/fileman/index.html', // Öntanımlı Dosya Yöneticisi
+            filebrowserImageBrowseUrl: '/fileman/index.html?type=image', // Sadece Resim Dosyalarını Gösteren Dosya Yöneticisi
+            removeDialogTabs: 'link:upload;image:upload' // Upload işlermlerini dosya Yöneticisi ile yapacağımız için upload butonlarını kaldırıyoruz
+
+
+        });
+    })
+
+</script>
+
+
+
+
+

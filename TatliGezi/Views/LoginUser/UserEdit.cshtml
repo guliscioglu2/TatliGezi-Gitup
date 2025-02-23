@@ -1,0 +1,86 @@
+﻿
+@{
+    ViewBag.Title = "UserEdit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model TatliGezi.Models.User
+
+
+
+<!-- ========== HEADER ========== -->
+@Html.Partial("_Header", Model)
+
+<head>
+    <!-- ========== SEO ========== -->
+    <title>Tatli Gezi -Kullanıcı Profili</title>
+
+    <meta content="Kullanıcı profil bilgileri ve detayı " name="description">
+    <meta content="Kullanıcı, profil, güncelleme" name="keywords">
+    <meta content="Gül İşçioğlu" name="author">
+
+
+
+</head>
+
+<!-- ========== MAIN ========== -->
+<div class="page-title">
+    <div class="container">
+        <div class="inner">
+            <h1>Profilim</h1>
+        </div>
+    </div>
+</div>
+
+<!-- =========== MAIN ========== -->
+<main id="contact-page">
+    <div class="container">
+        @if (ViewBag.Durum == -1)
+        {
+            <div class="alert alert-danger">Ooopsss!...Lütfen Gerekli Alanları Doldurunuz.</div>
+        }
+
+        @if (ViewBag.Durum == -1)
+        {
+            <div class="alert alert-danger">Ooopsss!...Lütfen Gerekli Alanları Doldurunuz.</div>
+        }
+
+        @if (ViewBag.Durum == -2)
+        {
+            <div class="alert alert-danger">Ooopsss!...Şifreler uyuşmuyor.</div>
+        }
+
+
+        <form id="contact-form" method="post">
+            <div class="row">
+                <div class="col-md-6">
+                    @Html.TextBoxFor(x => x.Name, new { placeholder = "İsminizi Girin", @class = "form-control", type = "text", name = "Name", })
+
+                </div>
+                <div class="col-md-6">
+                    @Html.TextBoxFor(x => x.Surname, new { placeholder = "Soyadınızı Girin", @class = "form-control", type = "text", name = "Surname", })
+
+                </div>
+                <div class="col-md-12">
+                    @Html.TextBoxFor(x => x.Email, new { placeholder = "Mailinizi Girin", @class = "form-control", type = "email", name = "Mail" })
+
+                </div>
+                <div class="col-md-12">
+                    <button type="submit" class="btn pull-right">Kaydet</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</main>
+
+<!-- ========== FOOTER ========== -->
+@Html.Partial("_Footer", Model)
+
+
+<!-- ========== BACK TO TOP ========== -->
+<div id="back-to-top">
+    <i class="fa fa-angle-up" aria-hidden="true"></i>
+</div>
+
+
+
+

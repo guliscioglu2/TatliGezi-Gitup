@@ -1,0 +1,146 @@
+﻿
+@{
+    ViewBag.Title = "Detail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@model TatliGezi.Models.Shop.Order
+<head>
+    <!-- ========== SEO ========== -->
+    <title>Tatli Gezi - Sipariş Ürün Detayı</title>
+
+    <meta content="Sipariş ürün detayı ve üzün bilgileri " name="description">
+    <meta content="sipariş, detay, ürün detayı" name="keywords">
+    <meta content="Gül İşçioğlu" name="author">
+
+
+
+</head>
+<!-- ========== HEADER ========== -->
+@Html.Partial("_Header", Model)
+<!-- =========== PAGE TITLE ========== -->
+<div class="page-title">
+    <div class="container">
+        <div class="inner">
+            <h1>Sipariş Bilgisi</h1>
+            <ol class="breadcrumb">
+                <li><a href="/anasayfa/">Anasayfa</a></li>
+                <li><a href="/magaza/">Mağaza</a></li>
+                <li>Sipariş Bilgisi</li>
+            </ol>
+        </div>
+    </div>
+</div>
+
+<!-- =========== MAIN ========== -->
+<div class="container" style="margin-bottom:20px;">
+    <div class="row">
+        <div class="col-lg-8 col-md-offset-2">
+            <form method="post">
+                <div class="product-tabs">
+                    <div class="tab-content">
+
+           
+                        <!-- TAB -->
+                        <div role="tabpanel" class="tab-pane active" id="description">
+                            <h6 style="font-weight:600;"> Sipariş Numaranız : @Model.OrderCode </h6>
+                            <h6>Sipariş Durumu : @Model.Status.Name</h6>
+                            <h6>Sipariş Tarihi : @Model.AddDate.ToShortDateString() </h6>
+
+
+                            <div class="table-responsive-md" style="margin-top:20px;">
+
+                                <h6 style="font-weight:bold;">SİPARİŞ BİLGİSİ</h6>
+                                <table class="table shopping-cart-table">
+
+                                    <thead>
+                                        <tr class="shopping-cart-table-header">
+                                            <th hidden></th>
+                                            <th scope="col" rowspan="1">&nbsp;</th>
+                                            <th scope="col" rowspan="1"><span class="nobr">Ürün Adı</span></th>
+                                            <th scope="col" class="a-center" colspan="1"><span class="nobr">Adet</span></th>
+                                            <th scope="col" rowspan="1" class="a-center">Fiyat</th>
+
+                                        </tr>
+                                    </thead>
+                                    @foreach (var item in Model.OrderProducts)
+                                    {
+
+                                        <tbody>
+                                            <!-- ITEM -->
+                                            <tr class="item">
+                                                <td hidden id="basketID"> @item.ID </td>
+                                                <td class="image" style="width: 50%;">
+                                                    <img class="img-rounded img-responsive">
+                                                    <figure class="image-hover">
+                                                        <a href="shop-details.html" class="product-image" style="width:80%;">
+                                                            <img src="@item.Product.ImageView" style="width:100%;" class="text-center"><img class="img-responsive">
+                                                            <span class="view-text sm">Ürünü Gör</span>
+                                                        </a>
+                                                    </figure>
+                                                </td>
+                                                <td>
+                                                    <h5 class="product-name">
+                                                        <a href="shop-details.html">@item.Product.ProductName</a>
+                                                    </h5>
+                                                </td>
+                                                <td class="a-center">@item.Quantity</td>
+
+                                                @if (item.Product.Discount == 0)
+                                                {
+                                                    <td class="a-center">@item.ProductQuantityDiscountPrice.ToString("##.##")&#8378;</td>
+
+                                                }
+                                                else
+                                                {
+                                                    <td class="a-center">@item.ProductQuantityPrice.ToString("##.##")&#8378;</td>
+
+                                                }
+
+
+                                            </tr>
+                                            <!-- ITEM -->
+
+                                        </tbody>
+
+                                    }
+
+                                </table>
+                         
+                            </div>
+                            <aside class="widget mb30">
+                                <h4 class="widget-title">TESLİMAT ADRESİ</h4>
+                                <div class="inner">
+                                    <p>@Model.UserAdress.Title</p>
+                                    <p>@Model.UserAdress.AdressDetail</p>
+                                    <p>@Model.UserAdress.Town.TownName @Model.UserAdress.City.CityName</p>
+                                </div>
+                            </aside>
+
+
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </form>
+
+        </div>
+
+    </div>
+    <!-- SOPPING CART -->
+    <!-- SHIPPING DETAILS -->
+
+</div>
+
+<!-- ========== FOOTER ========== -->
+@Html.Partial("_Footer", Model)
+
+
+<!-- ========== BACK TO TOP ========== -->
+<div id="back-to-top">
+    <i class="fa fa-angle-up" aria-hidden="true"></i>
+</div>
+

@@ -1,0 +1,20 @@
+﻿
+@{
+    ViewBag.Title = "SliderAdd";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+@Html.Partial("Partial/SliderForm")
+
+<script src="~/Content/Admin1/vendor/jquery/jquery.min.js"></script>
+<script src="~/Content/Admin1/vendor/bootstrap/js/bootstrap.min.js"></script>
+
+
+<script src="~/Content/Admin1/vendor/datatables/jquery.dataTables.js"></script>
+<script src="~/Content/Admin1/vendor/datatables/dataTables.bootstrap4.js"></script>
+<script>
+
+    $(document).ready(function () {
+        $(".form-group input").addClass("form-control");
+    })
+</script>

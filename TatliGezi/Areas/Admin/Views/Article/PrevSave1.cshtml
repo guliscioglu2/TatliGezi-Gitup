@@ -1,0 +1,124 @@
+﻿
+@{
+    ViewBag.Title = "PrevSave1";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+
+@{
+    ViewBag.Title = "PrevSave1";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+@model TatliGezi.Models.MultipleData.ArticlePreview
+
+
+
+
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            @if (ViewBag.Durum == -1)
+            {
+                <div class="alert alert-danger">Ooopsss!...Lütfen Gerekli Alanları Doldurunuz.</div>
+            }
+
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-lg-6">
+                        @using (Html.BeginForm(null, null, FormMethod.Post, new { @enctype = "multipart/form-data" }))
+                        {
+
+                            <div class="form-group">
+                                <label>Başlık</label>
+                                @Html.TextBoxFor(x => x.preview.ArticleTitle)
+                                @Html.HiddenFor(x => x.preview.ID)
+                            </div>
+                            <div class="form-group">
+                                <label>Kategori Seçiniz</label>
+                                @Html.DropDownList("CategoryList", (List<SelectListItem>)ViewData["Category"], new { @class = "form-control" })
+                            </div>
+                            <div class="form-group">
+                                <label>Resim:</label>
+                                <input type="file" name="resim" id="resim" />
+                            </div>
+                            if (Model != null)
+                            {
+                                <img src="@Model.preview.PhotoPath1" width="80" />
+                            }
+
+                            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal">Test Ekle</button>
+
+
+
+                            <div class="form-group">
+                                <label>İçerik</label>
+                                @Html.TextAreaFor(x => x.preview.ArticleContent)
+                            </div>
+
+                            <input type="submit" name="command" class="btn btn-primary" value="Kaydet" />
+                            <input type="submit" name="command" class="btn btn-info" value="Ön izleme" />
+
+
+                        }
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Test Listesi</h4>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script>
+    function copyToClipboard(element) {
+        var $temp = $("<input>");
+        $("body").append($temp);
+        $temp.val($(element).text()).select();
+        document.execCommand("copy");
+        $temp.remove();
+    }
+</script>
+
+<script src="~/Content/Admin1/vendor/jquery/jquery.min.js"></script>
+<script src="~/Content/Admin1/vendor/bootstrap/js/bootstrap.min.js"></script>
+<script src="~/CK8/ckeditor/ckeditor.js"></script>
+
+<script>
+    $(document).ready(function () {
+
+        $(".form-group input").addClass("form-control");
+        CKEDITOR.replace("preview.ArticleContent", {
+
+            filebrowserBrowseUrl: '/fileman/index.html', // Öntanımlı Dosya Yöneticisi
+            filebrowserImageBrowseUrl: '/fileman/index.html?type=image', // Sadece Resim Dosyalarını Gösteren Dosya Yöneticisi
+            removeDialogTabs: 'link:upload;image:upload' // Upload işlermlerini dosya Yöneticisi ile yapacağımız için upload butonlarını kaldırıyoruz
+
+
+        });
+    })
+
+</script>
+
+
+
+
+
+
+

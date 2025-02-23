@@ -1,0 +1,251 @@
+﻿
+@{
+    ViewBag.Title = "AdressList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model List<TatliGezi.Models.Shop.UserAdress>
+
+<head>
+    <!-- ========== SEO ========== -->
+    <title>Tatli Gezi - Kullaanıcı Teslimat Adresi Listesi</title>
+    <meta content="Kullanıcı adres Listesi. " name="description">
+    <meta content="Adres listesi, teslimat adres listesi, kullanıcı adres listesi " name="keywords">
+    <meta content="Gül İşçioğlu" name="author">
+
+
+
+
+</head>
+<style>
+    .widget {
+        margin-top: 85px !important;
+    }
+</style>
+<style>
+        input[type="checkbox"] { /* change "blue" browser chrome to yellow */
+                    filter: sepia(1) hue-rotate(132deg);
+    /**/ /**/ /*filter: sepia(1) hue-rotate( 183deg );*/
+        }
+
+        /* The container */
+        .form-check-input {
+            width: 20px;
+            height: 15px;
+            background: brown !important;
+            margin: 20px 60px;
+            border-radius: 50px;
+            position: relative;
+        }
+
+        input[type="checkbox"] {
+            cursor: pointer;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: auto;
+            width: 16px !important;
+            height: 16px !important;
+            margin: 5px;
+            box-shadow: none;
+            font-size: 2em;
+        }
+
+            input[type="checkbox"]:checked {
+                background: #8ab7ab !important;
+            }
+</style>
+<style>
+    /*    main {
+        padding: 30px 0;
+    }
+
+
+
+
+    input[type="checkbox"] {
+        cursor: pointer;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        width: 16px !important;
+        height: 16px !important;
+        margin: 5px;
+        outline: 2px solid lightblue;
+        box-shadow: none;
+        font-size: 2em;
+    }
+
+        input[type="checkbox"]:checked {
+            background: #8ab7ab;
+        }*/
+
+    /*    input[type="checkbox"]:hover {
+            filter: brightness(90%);
+        }
+        input[type="checkbox"]:disabled {
+            background: #e6e6e6;
+            opacity: 0.6;
+            pointer-events: none;
+        }
+
+        input[type="checkbox"]:after {
+            content: '';
+            position: relative;
+            left: 40%;
+            top: 20%;
+            width: 15%;
+            height: 40%;
+            border: solid #fff;
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+            display: none;
+        }
+
+        input[type="checkbox"]:checked:after {
+            display: block;
+        }
+
+        input[type="checkbox"]:disabled:after {
+            border-color: #7b7b7b;
+        }*/
+</style>
+<style>
+    .widget {
+        margin-top: 85px !important;
+    }
+</style>
+<!-- ========== HEADER ========== -->
+@Html.Partial("_Header", Model)
+
+
+<!-- =========== PAGE TITLE ========== -->
+<div class="page-title">
+    <div class="container">
+        <div class="inner">
+            <h1>Adres Bilgisi</h1>
+            <ol class="breadcrumb">
+                <li><a href="/anasayfa/">Anasayfa</a></li>
+                <li><a href="/magaza/">Mağaza</a></li>
+                <li>Adres Bilgileri</li>
+            </ol>
+        </div>
+    </div>
+</div>
+
+<!-- =========== MAIN ========== -->
+<div class="container" style="margin-bottom:20px;">
+    <div class="row">
+        <div class="col-lg-8">
+
+            <form method="post">
+
+                <div class="product-tabs mt50">
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li role="presentation" class="active"><a href="#description" aria-controls="description" role="tab" data-toggle="tab">Kayıtlı Adresler</a></li>
+                        <li role="presentation"><a href="/AdresEkle">Yeni  Adres</a></li>
+                    </ul>
+                    <div class="tab-content">
+                        <!-- TAB -->
+                        <div role="tabpanel" class="tab-pane active" id="description">
+
+                            <table class="table shopping-cart-table">
+                                <thead>
+                                    <tr class="shopping-cart-table-header">
+                                        <th rowspan="1"><span class="nobr">Şipariş Adı</span></th>
+                                        <th rowspan="1"><span class="nobr">İl</span></th>
+                                        <th rowspan="1"><span class="nobr">İlçe</span></th>
+
+                                        <th rowspan="1"><span class="nobr">Adres</span></th>
+
+                                        <th rowspan="1" class="nobr">Seç</th>
+                                    </tr>
+                                </thead>
+                                @foreach (var item in Model)
+                                {
+
+                                    <tbody>
+
+                                        <!-- ITEM -->
+                                        <tr class="item">
+
+                                            <td class="media-left">@item.Title</td>
+                                            <td class="media-left">@item.City.CityName</td>
+                                            <td class="media-left">@item.Town.TownName</td>
+                                            <td class="media-left">@item.AdressDetail</td>
+                                            <td class="media-left checkbox-list">
+                                                @*<input type="checkbox" name="selectedBranches" class="cb" value="@item.ID" />*@
+                                                <div class="form-check">
+                                                    <input class="form-check-input cb" name="selectedBranches" type="checkbox" value="@item.ID" id="flexCheckChecked">
+                                                </div>
+                                            </td>
+
+                                        </tr>
+                                        <!-- ITEM -->
+
+                                    </tbody>
+
+                                }
+                                <tfoot>
+                                    <tr>
+                                        <td colspan="50" class="a-right pt50">
+                                            <button id="AdressSave" class="btn md green">Onayla</button>
+
+                                        </td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-lg-4">
+            @Html.Partial("_PaymentRightHeader", Model)
+
+        </div>
+    </div>
+    <!-- SOPPING CART -->
+    <!-- SHIPPING DETAILS -->
+
+</div>
+
+<!-- ========== FOOTER ========== -->
+@Html.Partial("_Footer", Model)
+
+
+<!-- ========== BACK TO TOP ========== -->
+<div id="back-to-top">
+    <i class="fa fa-angle-up" aria-hidden="true"></i>
+</div>
+
+
+@section js{
+    <script>
+        $("#AdressSave").on("click", function () {
+
+            var selectedBranches = $('input[name="selectedBranches"]:checked').val();
+            $.ajax({
+                url: '/Order/AdressSave',
+                type: 'POST',
+                dataType: 'json',
+
+                data: { ID: $('input[name="selectedBranches"]:checked').val() },
+                success: function () {
+                    window.location.href = "/AdresBilgisi/";
+                }
+
+            })
+        })
+    </script>
+    <script>
+        $("input[type=checkbox][name=selectedBranches]:first").attr('checked', 'checked');
+    </script>
+    <script>
+
+        $('input[type="checkbox"]').on('change', function () {
+            $('input[type="checkbox"]').not(this).prop('checked', false);
+        });
+    </script>
+}
+

@@ -1,0 +1,210 @@
+﻿
+@using TatliGezi.SeoSetting
+<style>
+    .shopping-cart {
+        height: auto;
+        max-height: 85vh;
+        overflow: auto;
+    }
+</style>
+<!-- ========== LOGO ========== -->
+@*<div class="big-logo hidden-sm hidden-xs hidden-xxs">
+    <a href="index.html">
+        <img src="~/Images/Logo/logoBlog.png" height="60" alt="Image">
+    </a>
+</div>*@
+
+<header class="fixed">
+    <div class="container">
+        <!-- NAVBAR HEADER -->
+        <div class="navbar-header">
+            <button class="navbar-toggle mobile-menu-btn" data-toggle="collapse" aria-expanded="false">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/anasayfa/">
+                <img src="~/Images/Logo/logoBlog.png" height="40" alt="Logo" />
+            </a>
+        </div>
+        <!-- MAIN MENU -->
+        <nav id="main-menu" class="main-menu mobile-menu navbar-collapse">
+            <ul class="nav navbar-nav">
+                <li class="mobile-menu-title" style="display:none;">MENU</li>
+
+                <li class="dropdown">
+                    <a href="#" data-toggle="dropdown" class="dropdown-toggle" aria-expanded="true">KATEGORİLER <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        @foreach (var item in ViewData["Category"] as IList<TatliGezi.Models.ArticleCategory>)
+                        {
+                            <li><a href="/kategori/@Seo.EditAdress(item.CategoryName)/">@item.CategoryName</a></li>
+                        }
+                    </ul>
+                </li>
+
+
+                @*<li><a href="/Galeri/">GALERİ</a></li>*@
+
+                <li><a href="/hakkimizda/">HAKKIMIZDA</a></li>
+
+                <li><a href="/magaza/">Mağaza</a></li>
+
+                <li><a href="/iletisim/">İLETİŞİM</a></li>
+
+                <!-- SHOPPING CART -->
+
+                <li class="dropdown cart ">
+
+                    @if ((int)Session["Basket"] > 0)
+
+                    {
+
+                        <a class="shopping-cart-icon" href="/sepetim">
+
+                            <i class="fa fa-shopping-basket" aria-hidden="true">
+
+                                <span class="shopping-cart-item"> @Session["Basket"] </span>
+
+                            </i>
+
+
+                        </a>
+
+                        <div class="shopping-cart ">
+                            <ul class="cart-item-list">
+                                <!-- ITEM -->
+
+                                @foreach (var item in ViewData["BasketList"] as IList<TatliGezi.Models.Shop.Basket>)
+                                {
+                                    <li>
+                                        <figure class="image-hover">
+                                            <a href="shop-details.html">
+                                                <img src="@item.Product.ImageView" class="img-responsive" alt="Image">
+                                                <span class="view-text sm">ÜRÜNÜ GÖR</span>
+                                            </a>
+                                        </figure>
+                                        <div class="details">
+                                            <h6 class="product-title"><a href="shop-details.html">@item.Product.ProductName</a></h6>
+                                            @if (@item.Product.Discount == 0)
+                                            {
+                                                <div class="product-price">@item.ProductQuantityPrice.ToString("##.##")  &#8378;</div>
+
+                                            }
+                                            else
+                                            {
+                                                <div class="product-price">@item.ProductQuantityDiscountPrice.ToString("##.##")  &#8378;</div>
+
+                                            }
+                                            <br />
+                                            <div class="product-title">Adet : @item.Quantity</div>
+                                            <div class="remove-item"> <a style="cursor:pointer" title="Sil" onclick="sil('/Basket/Delete/','@item.ID')"><i class="fa fa-trash-o" aria-hidden="true"></i></a></div>
+
+                                        </div>
+                                    </li>
+                                }
+
+
+                            </ul>
+
+
+                            <p class="cart-sub-total clearfix"><span class="pull-left">Toplam Tutar :</span><span class="pull-right total"><strong>@ViewData["Total"] &#8378; </strong></span></p>
+                            <a href="/sepetim" class="btn md pink fw">SEPETE GİT</a>
+
+
+
+                        </div>
+
+
+                    }
+
+                    else
+                    {
+
+                        <a class="shopping-cart-icon" href="/sepetim">
+
+                            <i class="fa fa-shopping-basket" aria-hidden="true">
+
+                            </i>
+
+
+                        </a>
+                        <div class="shopping-cart ">
+                            <h6 class="product-title">Sepetiniz Boş</h6>
+                        </div>
+                    }
+
+                </li>
+
+                @if (Request.Cookies["Member"] == null)
+                {
+                    <li class="dropdown">
+                        <a href="#" data-toggle="dropdown" class="dropdown-toggle" aria-expanded="true"> <img src="~/Images/vectorpaint (1).svg" class="filter-green" /> <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="/girisyap/">Giriş Yap</a></li>
+                            <li><a href="/uyeol/">Üye Ol</a></li>
+
+
+                        </ul>
+                    </li>
+                }
+                else
+                {
+                    <li class="dropdown">
+                        <a href="#" data-toggle="dropdown" class="dropdown-toggle" aria-expanded="true"> <img src="~/Images/vectorpaint (1).svg" class="filter-green" /> <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="/profilim/@Request.Cookies["Member"].Values["uID"]">Profilim</a></li>
+                            <li><a href="/siparislerim">Siparişlerim</a></li>
+
+                            <li><a href="/LoginUser/SignOut">Çıkış Yap</a></li>
+
+
+                        </ul>
+                    </li>
+                }
+
+
+                <!-- SEARCH -->
+                <li id="searchClose">
+
+                    <a id="btnSearchOpen">
+                        <i class="fa fa-search fa-fw"></i>
+                    </a>
+
+                </li>
+
+                <li id="searchOpen" style="padding-top: 15px !important; display: none;">
+                    <div class="row">
+
+                        <div class="col-md-10" style="padding-right: 1px !important;">
+
+                            <aside class="widget">
+                                <div class="sidebar-search">
+                                    <form method="get" class="widget_search">
+                                        <input type="search" name="SearchString" class="form-control" placeholder="Arama">
+                                        <button type="submit">
+                                            <i class="fa fa-search"></i>
+                                        </button>
+
+                                    </form>
+
+                                </div>
+
+
+
+
+
+                            </aside>
+                        </div>
+                        <div class="col-md-2" style="padding-left: 1px !important;">
+                            <button type="button" id="btnSearchClose" class="close custom-modal-close-button" aria-hidden="true" style="line-height:45px !important;">&times;</button>
+
+                        </div>
+
+                    </div>
+
+                </li>
+            </ul>
+
+        </nav>
+    </div>
+</header>

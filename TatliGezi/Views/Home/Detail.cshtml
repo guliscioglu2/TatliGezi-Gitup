@@ -1,0 +1,485 @@
+﻿
+@{
+    ViewBag.Title = "Detail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model TatliGezi.Models.Article
+@using TatliGezi.SeoSetting
+
+
+<style>
+    .dropcap img {
+        max-width: 100% !important;
+        height: auto !important;
+    }
+
+    audio {
+        width: -webkit-fill-available;
+        height: 50px;
+    }
+</style>
+
+<head>
+    <!-- ========== SEO ========== -->
+    <title>@Model.ArticleTitle</title>
+
+    <meta content="@Model.MetaDescription" name="description">
+    <meta content="@Model.Keywords" name="keywords">
+    <meta content="@Model.Author" name="author">
+
+
+
+</head>
+<!-- ========== HEADER ========== -->
+@Html.Partial("_Header", Model)
+
+<!-- ========== MAIN ========== -->
+
+<main class="blog-post">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-9">
+                <article class="post">
+                    <!-- IMAGE -->
+
+
+                    @if (Model.Format.Value == 1)//Stardard
+
+                    {
+                        <figure class="mb40">
+                            <img src="@Model.PhotoPath1" class="img-responsive fw" alt="Image">
+                        </figure>
+                    }
+
+                    @if (Model.Format.Value == 2)//Audio
+
+                    {
+
+                        <figure class="mb40">
+                            <div class="audio-wrap">
+                                <img src="@Model.PhotoPath1" class="img-responsive fw" alt="Image">
+
+                                <audio src="@Model.Audio" width="100%" height="auto" controls="controls"></audio>
+                            </div>
+
+
+                        </figure>
+
+
+                    }
+
+
+                    @if (Model.Format.Value == 3)//Video
+
+                    {
+                        <div class="embed-responsive embed-responsive-16by9 mb40">
+                            <iframe src="@Model.Url" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+                        </div>
+                    }
+
+
+                    @if (Model.Format.Value == 4)//Gallery
+
+                    {
+                        <div class="blog-post-gallery-slider owl-carousel mb40">
+                            <div class="item">
+                                <figure class="image-hover">
+                                    <img src="@Model.PhotoPath1" alt="Image">
+                                </figure>
+                            </div>
+                            <div class="item">
+                                <figure class="image-hover">
+                                    <img src="@Model.PhotoPath2" alt="Image">
+                                </figure>
+                            </div>
+                            <div class="item">
+                                <figure class="image-hover">
+                                    <img src="@Model.PhotoPath3" alt="Image">
+                                </figure>
+                            </div>
+
+                        </div>
+                    }
+
+
+                    @if (Model.Format.Value == 5)//Quote
+
+                    {
+                        <div class="quote-post text-center mb40">
+                            <i class="fa fa-quote-left"></i>
+                            <p>@Model.QuoteContent</p>
+                            <h5>@Model.Author</h5>
+                        </div>
+                    }
+
+
+                    <h1 class="post-title">@Model.ArticleTitle</h1>
+
+                    <div class="post-info mb30">
+                        <span><i class="fa fa-clock-o" aria-hidden="true"></i> @Model.AddDate.ToShortDateString() </span>
+                        <span><i class="fa fa-eye" aria-hidden="true"></i> @Model.View görüntüleme </span>
+                        <span><a href="#"><i class="fa fa-commenting-o" aria-hidden="true"></i> @Model.ArticleComment.Where(x => x.IsDelete == false).Count() yorum </a></span>
+                    </div>
+                    <div class="post-category mb30">
+                        <a href="#">@Model.ArticleCategory.CategoryName</a>
+                    </div>
+                    <p class="dropcap">@Html.Raw(Model.ArticleContent)</p>
+
+                    <div class="meta-post">
+                        <div class="tags">
+                            <span><i class="fa fa-tags"></i> Etiketler</span>
+                            @foreach (var item in ViewData["Tags"] as List<TatliGezi.Models.ArticleTag>)
+                            {
+                                <a href="/Home/TagList/@item.ID" rel="tag">@item.TagName</a>
+
+                            }
+                        </div>
+                        <div class="share">
+                            <span><i class="fa fa-share-alt"></i>PAYLAŞ</span>
+                            <div class="social-media">
+                                <a class="facebook" href="#" onclick="window.open('https://www.facebook.com/sharer.php?u=' + encodeURIComponent(location.href), 'facebook-share-dialog', 'width=626,height=436'); return false;" data-toggle="tooltip" data-original-title="Facebook"><i class="fa fa-facebook"></i></a>
+                                <a class="twitter" href="#" onclick="window.open('https://twitter.com/intent/tweet?source=tweetbutton&url='+encodeURIComponent(location.href),'twitter-share-dialog','width=626,height=436'); return false;" data-toggle="tooltip" data-original-title="Twitter"><i class="fa fa-twitter"></i></a>
+                                <a class="linkedin" href="#" onclick="window.open('https://www.linkedin.com/sharing/share-offsite/?url='+encodeURIComponent(location.href),'linkedin-share-dialog','width=626,height=436'); return false;" data-toggle="tooltip" data-original-title="Linkedin"><i class="fa fa-linkedin"></i></a>
+
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <h4 class="mt80 mb50">Benzer Gönderiler</h4>
+                    <div class="related-posts-2">
+                        <div class="row">
+                            @foreach (var item in ViewData["Posts"] as IList<TatliGezi.Models.Article>)
+                            {
+
+                                <!-- ITEM -->
+                                <div class="col-md-6">
+                                    <div class="item">
+                                        <div class="row">
+                                            <div class="col-md-5 col-sm-5">
+                                                <figure class="image-hover">
+                                                    <a href="/Home/Detay/@item.ID">
+                                                        <img src="@item.PhotoPath1" class="img-responsive" alt="Image">
+                                                        <span class="view-text md">OKU <i class="fa fa-long-arrow-right" aria-hidden="true"></i></span>
+                                                    </a>
+                                                </figure>
+                                            </div>
+                                            <div class="col-md-7 col-sm-7">
+                                                <div class="details">
+                                                    <h4 class="title"><a href="/Home/Detay/@item.ID">@item.ArticleTitle</a></h4>
+                                                    <div class="post-meta">
+                                                        <span><i class="fa fa-clock-o" aria-hidden="true"></i> @item.AddDate.ToShortDateString() </span>
+                                                        <span><a href="#"><i class="fa fa-commenting-o" aria-hidden="true"></i> @item.ArticleComment.Count() </a></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            }
+                        </div>
+                    </div><!-- COMMENTS -->
+
+                             <div class="comments">
+                        <h4 class="mt80 mb50">YORUMLAR (@Model.ArticleComment.Where(x => x.IsDelete == false).Count())  </h4>
+
+                        @foreach (var item in Model.ArticleComment.Where(x => x.IsDelete == false).OrderByDescending(x=>x.AddDate))
+                        {
+
+                            <ul id="comments-list" class="comments-list">
+                                @if (item.UserID != null)
+                                {
+
+                                    <li>
+
+                                        <div class="comment-main-level">
+
+                                            @if (item.User.PhotoPath != null)
+                                            {
+                                                <div class="comment-avatar">
+                                                    <img src="@item.User.PhotoPath" alt="Image">
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                        <div class="comment-avatar">
+                                            <img width="60" height="60" avatar="@item.User.FullName">
+                                        </div>
+                                            }
+
+                                            <div class="comment-box">
+                                                <div class="comment-content">
+                                                    <h4 class="author-name"><a href="#"> @item.User.FullName</a></h4>
+                                                    @*<a href="#comment-form" class="reply-link">Reply</a>*@
+                                                    <span class="comment-info">
+                                                        <i class="fa fa-clock-o"></i>
+                                                        <a href="#">
+                                                            <time datetime="2016-10-01T19:56:36+00:00"> @item.AddDate.ToShortDateString()</time>
+                                                        </a>
+                                                    </span>
+                                                    <div class="comment-said-text">
+                                                        <p>@item.CommentDetail</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                    </li>
+
+                                }
+
+                                else
+                                {
+
+
+                                    <li>
+
+                                        <!-- COMMENT -->
+                                        <div class="comment-main-level">
+                                            <div class="comment-avatar">
+                                                <img width="60" height="60" avatar="@item.Name">
+                                            </div>
+                                            <div class="comment-box">
+                                                <div class="comment-content">
+                                                    <h4 class="author-name"><a href="#">@item.Name</a></h4>
+                                                    @*<a href="#comment-form" class="reply-link">Reply</a>*@
+                                                    <span class="comment-info">
+                                                        <i class="fa fa-clock-o"></i>
+                                                        <a href="#">
+                                                            <time datetime="2016-10-01T19:56:36+00:00">@item.AddDate.ToShortDateString()</time>
+                                                        </a>
+                                                    </span>
+                                                    <div class="comment-said-text">
+                                                        <p>@item.CommentDetail</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+
+
+                                }
+                            </ul>
+
+
+                        }
+                        <!-- COMMENT FORM -->
+                        <h4 class="mt80 mb50">YORUM YAZ</h4>
+
+                        @if (Request.Cookies["Member"] != null)
+                        {
+                            <div class="row">
+                                <form id="comment-form" class="comment-form" method="post">
+
+                                    <div class="col-md-12">
+                                        <textarea class="form-control " required name="cMessage" id="comment" placeholder="Yorum *"></textarea>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <button class="btn pull-right mt20" id="CommentAdd2">YORUMU GÖNDER </button>
+                                    </div>
+                                </form>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="row">
+                                <form id="comment-form" class="comment-form" method="post">
+                                    <div class="col-md-4">
+                                        <input name="cName" type="text" id="name" class="form-control" required placeholder="İsim *">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <input name="cEmail" type="email" id="email" class="form-control" required placeholder="Mail *">
+                                    </div>
+                                    @*<div class="col-md-4">
+                                            <input type="text" class="form-control" placeholder="Website">
+                                        </div>*@
+                                    <div class="col-md-12">
+                                        <textarea name="cMessage" id="comment" class="form-control" required placeholder="Yorum *"></textarea>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <button id="CommentAdd1" class="btn pull-right mt20">YORUMU GÖNDER </button>
+                                    </div>
+                                </form>
+                            </div>
+                        }
+                    </div>
+                </article>
+            </div><!-- SIDEBAR -->
+            <div class="col-md-3">
+                @Html.Partial("Partial/RightHeader", Model)
+
+            </div>
+        </div>
+    </div>
+</main>
+
+
+<!-- ========== FOOTER ========== -->
+@Html.Partial("_Footer", Model)
+<!-- ========== BACK TO TOP ========== -->
+<div id="back-to-top">
+    <i class="fa fa-angle-up" aria-hidden="true"></i>
+</div>
+
+
+@section js{
+    <script src="~/Content/validate.js"></script>
+    <script>
+    $("#CommentAdd1").click(function () {
+        var mess1 = new Object();
+        mess1.CommentDetail = $("#comment").val();
+        mess1.Name = $("#name").val();
+
+        mess1.Email = $("#email").val();
+        if (mess1.CommentDetail != "" && mess1.Name != "" && mess1.Email != "") {
+            $.ajax({
+            type: 'POST',
+            url: '/Home/Comment1/',
+            data: mess1,
+            success: function (data) {
+
+                $("ul").prepend("<li>" + data.CommentDetail + "</li>");
+
+                window.location.href = "/blog/@Seo.EditAdress(Model.ArticleTitle)/";
+
+            }
+        })
+        }
+
+
+    })
+
+
+
+    </script>
+    <script>
+    $("#CommentAdd2").click(function () {
+        var mess1 = new Object();
+        mess1.CommentDetail = $("#comment").val();
+
+        if (mess1.CommentDetail != "") {
+$.ajax({
+            type: 'POST',
+            url: '/Home/Comment2/',
+            data: mess1,
+            success: function (data) {
+
+                $("ul").prepend("<li>" + data.CommentDetail + "</li>");
+                //alert("Yorumunuz gönderildi.")
+
+                window.location.href = "/blog/@Seo.EditAdress(Model.ArticleTitle)/" ;
+
+            }
+        })
+        }
+
+    })
+
+
+
+    </script>
+
+
+    <script type="text/javascript">
+
+        /*
+         * OdoAvatar
+         * Adhersh M Nair
+         * Create Image avatar based on Initials
+         */
+        (function (w, d) {
+
+
+            function OdoAvatar(name, size) {
+
+                name = name || '';
+                size = size || 60;
+
+                var colours = [
+                    "#1abc9c", "#2ecc71", "#3498db", "#9b59b6", "#34495e", "#16a085", "#27ae60", "#2980b9", "#8e44ad", "#2c3e50",
+                    "#f1c40f", "#e67e22", "#e74c3c", "#ecf0f1", "#95a5a6", "#f39c12", "#d35400", "#c0392b", "#bdc3c7", "#7f8c8d"
+                ],
+
+                    nameSplit = String(name).toUpperCase().split(' '),
+                    initials, charIndex, colourIndex, canvas, context, dataURI;
+
+
+                if (nameSplit.length == 1) {
+                    initials = nameSplit[0] ? nameSplit[0].charAt(0) : '?';
+                } else if (nameSplit.length == 2) {
+                    initials = nameSplit[0].charAt(0) + nameSplit[1].charAt(0);
+                } else {
+                    initials = nameSplit[0].charAt(0) + nameSplit[1].charAt(0) + nameSplit[2].charAt(0);
+                }
+
+                if (w.devicePixelRatio) {
+                    size = (size * w.devicePixelRatio);
+                }
+
+                charIndex = (initials == '?' ? 72 : initials.charCodeAt(0)) - 64;
+                colourIndex = charIndex % 20;
+                canvas = d.createElement('canvas');
+                canvas.width = size;
+                canvas.height = size;
+                context = canvas.getContext("2d");
+
+                context.fillStyle = colours[colourIndex - 1];
+                context.fillRect(0, 0, canvas.width, canvas.height);
+                context.font = Math.round(canvas.width / 3) + "px Arial";
+                context.textAlign = "center";
+                context.fillStyle = "#FFF";
+                context.fillText(initials, size / 2, size / 1.6);
+
+                dataURI = canvas.toDataURL();
+                canvas = null;
+
+                return dataURI;
+            }
+
+            OdoAvatar.transform = function () {
+
+                Array.prototype.forEach.call(d.querySelectorAll('img[avatar]'), function (img, name) {
+                    name = img.getAttribute('avatar');
+                    img.src = OdoAvatar(name, img.getAttribute('width'));
+                    img.removeAttribute('avatar');
+                    img.setAttribute('alt', name);
+                });
+            };
+
+
+            // AMD support
+            if (typeof define === 'function' && define.amd) {
+
+                define(function () { return OdoAvatar; });
+
+                // CommonJS and Node.js module support.
+            } else if (typeof exports !== 'undefined') {
+
+                // Support Node.js specific `module.exports` (which can be a function)
+                if (typeof module != 'undefined' && module.exports) {
+                    exports = module.exports = OdoAvatar;
+                }
+
+                // But always support CommonJS module 1.1.1 spec (`exports` cannot be a function)
+                exports.OdoAvatar = OdoAvatar;
+
+            } else {
+
+                window.OdoAvatar = OdoAvatar;
+
+                d.addEventListener('DOMContentLoaded', function (event) {
+                    OdoAvatar.transform();
+                });
+            }
+
+        })(window, document);
+
+    </script>
+}
+
+
+
+

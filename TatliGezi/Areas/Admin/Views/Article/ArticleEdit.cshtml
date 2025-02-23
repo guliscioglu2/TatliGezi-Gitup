@@ -1,0 +1,121 @@
+﻿
+@{
+    ViewBag.Title = "ArticleEdit";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+
+@{
+    ViewBag.Title = "ArticleEdit";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+@model TatliGezi.Models.MultipleData.ArticleAdd
+
+
+@Html.Partial("Partial/_ArticleForm")
+
+
+
+@section js{
+
+    <script src="/Content/Admin1/vendor/jquery/jquery.min.js"></script>
+    <script src="/Content/Admin1/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script src="/CK/ckeditor/ckeditor.js"></script>
+    <script>
+
+        $(document).ready(function () {
+
+            $(".form-group input").addClass("form-control");
+            CKEDITOR.dtd.$removeEmpty.span = 0;
+            CKEDITOR.config.allowedContent = true;
+
+            CKEDITOR.addCss('.cke_editable img { max-width: 100% !important; height: auto !important; }');
+            CKEDITOR.on('instanceReady', function (ev) {
+
+                //resp. images for bootstrap 3
+                ev.editor.dataProcessor.htmlFilter.addRules(
+                    {
+                        elements:
+                        {
+                            $: function (element) {
+                                // Output dimensions of images as width and height
+                                if (element.name == 'img') {
+                                    var style = element.attributes.style;
+                                    //responzive images
+
+                                    //declare vars
+                                    var tclass = "";
+                                    var add_class = false;
+
+                                    tclass = element.attributes.class;
+
+                                    //console.log(tclass);
+                                    //console.log(typeof (tclass));
+
+                                    if (tclass === "undefined" || typeof (tclass) === "undefined") {
+                                        add_class = true;
+                                    } else {
+                                        //console.log("I am not undefined");
+                                        if (tclass.indexOf("img-responsive") == -1) {
+                                            add_class = true;
+                                        }
+                                    }
+
+                                    if (add_class) {
+                                        var rclass = (tclass === undefined || typeof (tclass) === "undefined" ? "img-responsive" : tclass + " " + "img-responsive");
+                                        element.attributes.class = rclass;
+                                    }
+
+                                    if (style) {
+                                        // Get the width from the style.
+                                        var match = /(?:^|\s)width\s*:\s*(\d+)px/i.exec(style),
+                                            width = match && match[1];
+
+                                        // Get the height from the style.
+                                        match = /(?:^|\s)height\s*:\s*(\d+)px/i.exec(style);
+                                        var height = match && match[1];
+
+                                        if (width) {
+                                            element.attributes.style = element.attributes.style.replace(/(?:^|\s)width\s*:\s*(\d+)px;?/i, '');
+                                            element.attributes.width = width;
+                                        }
+
+                                        if (height) {
+                                            element.attributes.style = element.attributes.style.replace(/(?:^|\s)height\s*:\s*(\d+)px;?/i, '');
+                                            element.attributes.height = height;
+                                        }
+                                    }
+                                }
+
+
+
+                                if (!element.attributes.style)
+                                    delete element.attributes.style;
+
+                                return element;
+                            }
+                        }
+                    });
+            });
+            $(document).ready(function () {
+                $('article.ArticleContent').children('img').each(function () {
+                    $(this).addClass('img-responsive');
+                });
+            });
+            CKEDITOR.replace("article.ArticleContent", {
+                allowedContent: true,
+                disallowedContent: 'img{width,height}',
+                width: '100%',
+                filebrowserBrowseUrl: '/fileman/index.html', // Öntanımlı Dosya Yöneticisi
+                filebrowserImageBrowseUrl: '/fileman/index.html?type=image', // Sadece Resim Dosyalarını Gösteren Dosya Yöneticisi
+                removeDialogTabs: 'link:upload;image:upload' // Upload işlermlerini dosya Yöneticisi ile yapacağımız için upload butonlarını kaldırıyoruz
+
+            });
+
+
+        })
+
+    </script>
+}
+
+

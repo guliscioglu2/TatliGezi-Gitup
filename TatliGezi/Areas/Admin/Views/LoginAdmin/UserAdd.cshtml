@@ -1,0 +1,77 @@
+﻿
+@{
+    ViewBag.Title = "UserAdd";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+
+@model TatliGezi.Models.User
+
+
+
+
+
+
+
+
+<!-- ========== MAIN ========== -->
+<div class="page-title">
+    <div class="container">
+        <div class="inner">
+            <h1>Admin Ekle</h1>
+            @*<ol class="breadcrumb">
+                    <li><a href="index.html">AnaSayfa</a></li>
+                    <li>Kayıt Ol</li>
+                </ol>*@
+        </div>
+    </div>
+</div>
+
+<!-- =========== MAIN ========== -->
+<main id="contact-page">
+    <div class="container">
+        @if (ViewBag.Durum == 0)
+        {
+            <div class="alert alert-danger">Bu kullanıcı zaten kayıtlı.</div>
+        }
+
+        @if (ViewBag.Durum == -1)
+        {
+            <div class="alert alert-danger">Ooopsss!... Lütfen Gerekli Alanları Doldurunuz.</div>
+        }
+
+        @if (ViewBag.Durum == -2)
+        {
+            <div class="alert alert-danger">Ooopsss!...Şifreniz en az 8 karakter,1 büyük harf, 1 küçük harf ve 1 rakam içermelidir.</div>
+        }
+        @if (ViewBag.Durum == -3)
+        {
+            <div class="alert alert-danger">Ooopsss!...Şifreler uyuşmuyor.</div>
+        }
+
+        <form id="contact-form" method="post">
+            <div class="row">
+                @*<div class="col-md-6">
+                    @Html.TextBoxFor(x => x.Name, new { placeholder = "İsminizi Girin", @class = "form-control", type = "text", name = "Name", })
+
+                </div>*@
+                <div class="col-md-6">
+                    @Html.TextBoxFor(x => x.Surname, new { placeholder = "Soyadınızı Girin", @class = "form-control", type = "text", name = "Surname" })
+
+                </div>
+                <div class="col-md-12">
+                    @Html.TextBoxFor(x => x.Email, new { placeholder = "Mailinizi Girin", @class = "form-control", type = "email", name = "Mail" })
+
+                    @Html.TextBoxFor(x => x.Password, new { placeholder = "Şifrenizi Girin", @class = "form-control", type = "password", name = "Password", @maxLength = "30", qminLength = "8" })
+                    @Html.TextBoxFor(x => x.ConfirmPassword, new { placeholder = "Şifrenizi Tekrar Girin", @class = "form-control", type = "password", name = "ConfirmPassword", })
+                </div>
+                <div class="col-md-12">
+                    <button type="submit" class="btn pull-right">Ekle</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</main>
+
+
+

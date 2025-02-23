@@ -1,0 +1,250 @@
+﻿
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>TATLI GEZİ</title>
+    <!-- Bootstrap core CSS-->
+    @*<link href="/Content/Admin1/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">*@
+    <!-- Custom fonts for this template-->
+    <link href="/Content/Admin1/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="/Content/Admin1/vendor/fontawesome-free/css/fontawesome.min.css" rel="stylesheet" />
+
+    <link href="/Content/Admin1/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
+    <link href="/Content/Admin1/css/sb-admin.css" rel="stylesheet">
+
+</head>
+<body id="page-top">
+    <nav class="navbar navbar-expand navbar-dark bg-dark static-top">
+        <a class="navbar-brand mr-1" href="/Admin/HomeAdmin/Index/">Tatlı Gezi Admin</a>
+        <button class="btn btn-link btn-sm text-white order-1 order-sm-0" id="sidebarToggle" href="#">
+            <i class="fas fa-bars"></i>
+        </button>
+        <!-- Navbar Search -->
+        <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0"></form>
+        <!-- Navbar -->
+        <ul class="navbar-nav ml-auto ml-md-0">
+
+            <li class="nav-item dropdown no-arrow mx-1">
+                <a class="nav-link dropdown-toggle" href="/Admin/Message/Index/" role="button" aria-haspopup="true" aria-expanded="false">
+                    <i class="fas fa-envelope fa-fw"></i>
+                    <span class="badge badge-danger">@*@Model.Where(x => x.IsActive== false).Count()*@</span>
+                </a>
+
+            </li>
+            <li class="nav-item dropdown no-arrow">
+                <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fas fa-user-circle fa-fw"></i>
+                </a>
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
+                    <a class="dropdown-item"><i class="fa fa-user"></i> @Request.Cookies["UserAdminName"]  </a>
+                    <a class="dropdown-item" href="/Admin/User/UserEdit/@Request.Cookies["UserAdminID"]">Profilim</a>
+                    <a class="dropdown-item" href="/Admin/User/ChangePassword/">Şifre Değiştir</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">Çıkış</a>
+                </div>
+            </li>
+        </ul>
+    </nav>
+    <div id="wrapper">
+        <!-- Sidebar -->
+        <ul class="sidebar navbar-nav">
+            <li class="nav-item active">
+                <a class="nav-link" href="/Admin/HomeAdmin/Index/">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li>
+
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown5" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fas fa-fw fa-chart-area"></i>
+                    <span>Raporlama</span>
+                </a>
+                <div class="dropdown-menu" aria-labelledby="pagesDropdown5">
+                    <h6 class="dropdown-header">Beğeni Grafikleri:</h6>
+                    <a class="dropdown-item" href="/Admin/LikeReport/Index/">Makale Beğeni</a>
+                    <a class="dropdown-item" href="/Admin/LikeQuizReport/Index/">Test Beğeni</a>
+                    <div class="dropdown-divider"></div>
+                    <h6 class="dropdown-header">Test Grafikleri:</h6>
+                    <a class="dropdown-item" href="/Admin/ResultReport/Index/">Sonuçlar ve Cevaplar</a>
+                </div>
+            </li>
+
+
+
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown1" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fas fa-fw fa fa-align-left"></i>
+                    <span>Makale</span>
+                </a>
+                <div class="dropdown-menu" aria-labelledby="pagesDropdown1">
+                    <h6 class="dropdown-header">Makale Kategorisi:</h6>
+                    <a class="dropdown-item" href="/Admin/ArticleCategory/CategoryAdd/">Kategori Ekle</a>
+                    <a class="dropdown-item" href="/Admin/ArticleCategory/Index/">Kategori Listele</a>
+                    <div class="dropdown-divider"></div>
+                    @*<h6 class="dropdown-header">Other Pages:</h6>*@
+                    <a class="dropdown-item" href="/Admin/Article/ArticleFormat/">Makale Ekle</a>
+                    <a class="dropdown-item" href="/Admin/Article/Index/">Makale Listele</a>
+                    <a class="dropdown-item" href="/Admin/Article/Taslak/">Taslakları Görüntüle</a>
+
+                </div>
+            </li>
+
+
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown2" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fas fa-fw fa fa-clipboard"></i>
+                    <span>Galeri</span>
+                </a>
+                <div class="dropdown-menu" aria-labelledby="pagesDropdown2">
+                    <h6 class="dropdown-header">Formatlar :</h6>
+                    <a class="dropdown-item" href="/Admin/Gallery/GalleryAdd/">Galeri Ekle</a>
+                    <a class="dropdown-item" href="/Admin/Gallery/Index/">Galeri Listele</a>
+                    <div class="dropdown-divider"></div>
+
+
+
+                </div>
+            </li>
+
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown3" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fas fa-fw fa fa-clipboard"></i>
+                    <span>Slider</span>
+                </a>
+                <div class="dropdown-menu" aria-labelledby="pagesDropdown3">
+                    <h6 class="dropdown-header">Slider :</h6>
+                    <a class="dropdown-item" href="/Admin/Slider/SliderAdd/">Slider Ekle</a>
+                    <a class="dropdown-item" href="/Admin/Slider/Index/">Slider Listele</a>
+                    <div class="dropdown-divider"></div>
+
+
+
+                </div>
+            </li>
+
+
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown4" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fas fa-fw fa fa-align-left"></i>
+                    <span>Shop</span>
+                </a>
+                <div class="dropdown-menu" aria-labelledby="pagesDropdown4">
+                    <h6 class="dropdown-header">Ürün Kategorisi:</h6>
+                    <a class="dropdown-item" href="/Admin/ProductCategory/CategoryAdd/">Kategori Ekle</a>
+                    <a class="dropdown-item" href="/Admin/ProductCategory/Index/">Kategori Listele</a>
+                    <div class="dropdown-divider"></div>
+                    <h6 class="dropdown-header">Ürünler:</h6>
+                    <a class="dropdown-item" href="/Admin/Product/ProductAdd/">Ürün Ekle</a>
+                    <a class="dropdown-item" href="/Admin/Product/Index/">Ürün Listele</a>
+
+                </div>
+            </li>
+
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown5" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fas fa-fw fa fa-clipboard"></i>
+                    <span>Sipariş Yönetimi</span>
+                </a>
+                <div class="dropdown-menu" aria-labelledby="pagesDropdown5">
+                    <h6 class="dropdown-header">Siparişler :</h6>
+                    <a class="dropdown-item" href="/Admin/OrderAdmin/OrderList/">Sipariş Listesi</a>
+                    <div class="dropdown-divider"></div>
+                </div>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown3" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fa fa-fw fa-users"></i>
+                    <span>Kullanıcılar</span>
+                </a>
+                <div class="dropdown-menu" aria-labelledby="pagesDropdown3">
+                    <a class="dropdown-item" href="/Admin/User/UserAdd/">Kullanıcı Ekle</a>
+                    <a class="dropdown-item" href="/Admin/User/Index/">Kullanıcı Listele</a>
+                </div>
+            </li>
+
+
+
+
+
+
+
+        </ul>
+        <div id="content-wrapper">
+            <div class="container-fluid">
+                <!-- Breadcrumbs-->
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="#">Dashboard</a>
+                    </li>
+                    <li class="breadcrumb-item active">Overview</li>
+                </ol>
+
+
+                @RenderBody()
+            </div>
+            <!-- /.container-fluid -->
+            <!-- Sticky Footer -->
+            <footer class="sticky-footer">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>Copyright © Your Website 2018</span>
+                    </div>
+                </div>
+            </footer>
+        </div>
+        <!-- /.content-wrapper -->
+    </div>
+    <!-- /#wrapper -->
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+    <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Mevcut oturumunuzu sonlandırmaya hazırsanız, aşağıdaki "Çıkış Yap" ı seçin.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Kapat</button>
+                    <a class="btn btn-primary" href="/Admin/LoginAdmin/SignOut/">Çıkış Yap</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Bootstrap core JavaScript-->
+    @*<script src="/Content/Admin1/vendor/jquery/jquery.min.js"></script>*@
+    <script src="~/Content/Admin1/vendor/jquery/jquery.min.js"></script>
+    <!-- Bootstrap core JavaScript-->
+    <script src="~/Content/Admin1/vendor/jquery/jquery.min.js"></script>
+    <script src="~/Content/Admin1/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="~/Content/Admin1/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Page level plugin JavaScript-->
+    <script src="~/Content/Admin1/vendor/chart.js/Chart.min.js"></script>
+    <script src="~/Content/Admin1/vendor/datatables/jquery.dataTables.js"></script>
+    <script src="~/Content/Admin1/vendor/datatables/dataTables.bootstrap4.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="~/Content/Admin1/js/sb-admin.min.js"></script>
+
+    <!-- Demo scripts for this page-->
+    <script src="~/Content/Admin1/js/demo/datatables-demo.js"></script>
+    <script src="~/Content/Admin1/js/demo/chart-area-demo.js"></script>
+
+    @RenderSection("js", false)
+</body>
+</html>

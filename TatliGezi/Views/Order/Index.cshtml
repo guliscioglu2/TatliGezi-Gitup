@@ -1,0 +1,186 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />
+
+<style>
+    .image-txt-container {
+        display: flex;
+        align-items: center;
+        flex-direction: row;
+    }
+</style>
+@model List<TatliGezi.Models.Shop.Order>
+@using TatliGezi.SeoSetting
+
+<head>
+    <!-- ========== SEO ========== -->
+    <title>Tatli Gezi - Siparişlerim</title>
+
+    <meta content="Sipariş ürün bilgileri ve detayı " name="description">
+    <meta content="sipariş, alışveriş, aldıklarım" name="keywords">
+    <meta content="Gül İşçioğlu" name="author">
+
+
+
+</head>
+<!-- ========== HEADER ========== -->
+@Html.Partial("_Header", Model)
+
+
+<!-- =========== PAGE TITLE ========== -->
+<div class="page-title">
+    <div class="container">
+        <div class="inner">
+            <h1>Siparişlerim</h1>
+            <ol class="breadcrumb">
+                <li><a href="/anaSayfa/">AnaSayfa</a></li>
+                <li><a href="/magaza/">Mağaza</a></li>
+                <li>Siparişlerim</li>
+            </ol>
+        </div>
+    </div>
+</div>
+
+<!-- =========== MAIN ========== -->
+<main id="shopping-cart-page">
+    <div class="container">
+        @if (Model.Count == 0)
+        {
+
+            <h1>Siparişiniz bulunmamaktadır.</h1>
+
+        }
+        else
+        {
+            <!-- SOPPING CART -->
+            <form method="post">
+
+                <div class="table-responsive-md">
+                    <table class="table shopping-cart-table">
+                        <thead>
+                            <tr class="shopping-cart-table-header">
+                                <th hidden></th>
+                                <th scope="col" rowspan="1">Sipariş No</th>
+                                <th scope="col" rowspan="1"><span class="nobr">Sipariş Tarihi </span></th>
+
+                                <th scope="col" rowspan="1"><span class="nobr">Ürünler </span></th>
+                                <th scope="col" rowspan="1" class="a-center">Adet</th>
+
+                                <th scope="col" class="a-center" colspan="1"><span class="nobr">Toplam Tutar </span></th>
+                                <th></th>
+
+                            </tr>
+                        </thead>
+                        @foreach (var item in Model)
+                        {
+
+                            <tbody>
+
+                                <!-- ITEM -->
+                                <tr class="item">
+                                    <td hidden id="orderID"> @item.ID </td>
+
+                                    <td style="padding: 30px 10px;">
+                                       
+                                            <p style="font-weight: 600; color:#629f8e">@item.OrderCode</p>
+
+                                    </td>
+
+                                    <td style="padding: 30px 10px;">
+                                       
+                                            <p>@item.AddDate.ToShortDateString()</p>
+                                      
+                                    </td>
+                                    <td>
+
+                                        @foreach (var item1 in @item.OrderProducts)
+                                        {
+                                            <div class="col-md-4 col-sm-4 col-xs-4" style="width:auto;">
+                                                <figure class="image-hover">
+
+                                                    <a href="/urun/@Seo.EditAdress(@item1.Product.ProductName)/">
+
+                                                        <img src="@item1.Product.ImageView" class="img-responsive box" alt="Image">
+                                                        <span class="view-text">İncele</span>
+                                                    </a>
+
+                                                </figure>
+                                            </div>
+
+                                        }
+                                    </td>
+                                    <td style="padding: 30px 10px;">
+                                        <p>
+                                            @item.OrderProducts.Sum(x => x.Quantity)
+                                        </p>
+                                    </td>
+                                    <td style="padding: 30px 10px;">
+                                        <p>@item.TotalPrice &#8378;</p>
+
+                                    </td>
+                                    <td style="line-height: 6;">
+
+                                        <a href="/siparisbilgisi/@item.ID" style="margin-bottom:15px;" class="btn sm green">SİPARİŞ DETAYI</a>
+
+                                    </td>
+                                </tr>
+                                <!-- ITEM -->
+
+                            </tbody>
+
+                        }
+                    </table>
+                </div>
+
+            </form>
+        }
+
+
+
+    </div>
+</main>
+
+<!-- ========== FOOTER ========== -->
+@Html.Partial("_Footer", Model)
+
+
+<!-- ========== BACK TO TOP ========== -->
+<div id="back-to-top">
+    <i class="fa fa-angle-up" aria-hidden="true"></i>
+</div>
+
+<!-- ========== SEARCH ========== -->
+<div class="fullscreen-search open-search">
+    <div class="inner">
+        <form class="search-form">
+            <div class="search-title">
+                <h1 class="title">Start Typing</h1>
+                <h1 class="title-down">Searching...</h1>
+            </div>
+            <fieldset class="field-container">
+                <input type="text" placeholder="Search..." class="field form-control" />
+                <div class="icons-container">
+                    <div class="icon-search"><i class="fa fa-search" aria-hidden="true"></i></div>
+                    <div class="icon-close"><i class="fa fa-times" aria-hidden="true"></i></div>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+    <button type="button" class="search-close"><i class="fa fa-times"></i></button>
+</div>
+@section js{
+
+
+
+}
+
+
+
+
+
+

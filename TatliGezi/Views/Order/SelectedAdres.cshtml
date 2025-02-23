@@ -1,0 +1,190 @@
+﻿
+@{
+    ViewBag.Title = "SelectedAdres";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .widget{
+        margin-top: 85px !important;
+    }
+</style>
+<style>
+    input[type="checkbox"] { /* change "blue" browser chrome to yellow */
+/*        filter: sepia(1) hue-rotate(132deg);
+*//**/        /*filter: sepia(1) hue-rotate( 183deg );*/
+    }
+
+    /* The container */
+    .form-check-input {
+        width:20px;
+        height: 15px;
+        background:brown !important;
+        margin: 20px 60px;
+        border-radius: 50px;
+        position: relative;
+    }
+    input[type="checkbox"] {
+        cursor: pointer;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: auto;
+        width: 16px !important;
+        height: 16px !important;
+        margin: 5px;
+        box-shadow: none;
+        font-size: 2em;
+    }
+    input[type="checkbox"]:checked {
+        background: #8ab7ab !important;
+    }
+</style>
+@model TatliGezi.Models.Shop.UserAdress
+<head>
+    <!-- ========== SEO ========== -->
+    <title>Tatli Gezi - Kullanıcı Teslimat Adresi</title>
+
+    <meta content="Kullanıcı adres detayı ve bilgileri. " name="description">
+    <meta content="Adres, teslimat adresi, kullanıcı adresi " name="keywords">
+    <meta content="Gül İşçioğlu" name="author">
+
+
+
+</head>
+<!-- ========== HEADER ========== -->
+@Html.Partial("_Header", Model)
+
+
+<!-- =========== PAGE TITLE ========== -->
+<div class="page-title">
+    <div class="container">
+        <div class="inner">
+            <h1>Adres Bilgisi</h1>
+            <ol class="breadcrumb">
+                <li><a href="/anasayfa/">Anasayfa</a></li>
+                <li><a href="/magaza/">Mağaza</a></li>
+                <li>Seçili Adres Bilgisi</li>
+            </ol>
+        </div>
+    </div>
+</div>
+
+<!-- =========== MAIN ========== -->
+@using (Html.BeginForm())
+            {
+<div class="container" style="margin-bottom:20px;">
+    <div class="row">
+        <div class="col-lg-8 col-md-8">
+            <form method="post">
+                <div class="product-tabs mt50">
+                    <!-- Nav tabs -->
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li role="presentation" class="active"><a href="#description" aria-controls="description" role="tab" data-toggle="tab">Teslimat Adresi</a></li>
+                        <li role="presentation"><a href="/AdresListesi">Değiştir</a></li>
+                    </ul>
+                    <div class="tab-content">
+                        <!-- TAB -->
+                        <div role="tabpanel" class="tab-pane active" id="description">
+                            <h6 style="font-weight:bold;">@Model.Title</h6>
+                            <p style="font-weight: 600;"> @Model.AdressDetail</p>
+                            <p style="font-weight: 600;">@Model.Town.TownName / @Model.City.CityName.ToString()</p>
+                            @if (Model.User.PhoneNumber != null)
+                            {
+                                <p style="font-weight:600;">+90 @Model.User.PhoneNumber</p>
+
+                            }
+
+                        </div>
+                        <div colspan="30" class="media-left ">
+                         
+                            <div class="form-check">
+                                <input class="form-check-input"  disabled="disabled" type="checkbox" value="true" id="flexCheckChecked" checked>
+                                <label style="font-weight: 600 !important;" class="form-check-label" for="flexCheckChecked">
+                                    Teslimat Adresi
+                                </label>
+                            </div>
+                            <div class="form-check ">
+                                <input class="form-check-input geekmark" disabled="disabled" type="checkbox" value="true" id="defaultCheck1" checked>
+                                <label style="font-weight: 600 !important;" class="form-check-label " for="defaultCheck1">
+                                    Fatura Adresi
+                                </label>
+                            </div>
+                        </div>
+                        <div colspan="30" class="a-right ">
+
+                            @*<a href="/Order/AddOrder/@Model.ID" class="btn md green">Onayla</a>*@
+                            <a href="/odemebilgileri/@Model.ID" class="btn md green">Onayla</a>
+
+                        </div>
+                    </div>
+
+                </div>
+            </form>
+
+        </div>
+
+        <div class="col-lg-4 col-md-4">
+            @*@Html.Partial("_PaymentRightHeader", Model)*@
+            <aside class="widget mb30">
+                <h4 class="widget-title">SİPARİŞ ÖZETİ</h4>
+
+                <div class="inner">
+
+                    <ul class="categories">
+
+
+                        <li style="border-bottom: none !important;"><a> Ürün Toplamı: <span class="pull-right" style="font-weight: bold;"> @ViewData["TotalPrice"] &#8378;</span></a></li>
+
+                        <li><a>Kargo Toplam: <span class="pull-right" style="font-weight: bold;"> @ViewData["CargoPrice"] &#8378;</span></a></li>
+
+                        <li><a>Toplam: <span class="pull-right" style="font-weight: bold;"> @ViewData["TotalPayment"] &#8378;</span></a></li>
+
+                    </ul>
+
+                    <div colspan="50" class="a-right pt50" style=" padding-top: 30px; margin-bottom: 30px;">
+
+                        @if (Request.Cookies["Member"] == null)
+                        {
+                            <a href="/girisyap" class="btn md green">SEPETİ ONAYLA</a>
+
+                        }
+                        else
+                        {
+                          
+                           <a href="/odemebilgileri/@Model.ID" class="btn md green">SEPETİ ONAYLA</a>
+
+                        }
+
+
+
+                    </div>
+                </div>
+
+            </aside>
+
+        </div>
+
+    </div>
+    <!-- SOPPING CART -->
+    <!-- SHIPPING DETAILS -->
+
+</div>
+}
+<!-- ========== FOOTER ========== -->
+@Html.Partial("_Footer", Model)
+
+
+<!-- ========== BACK TO TOP ========== -->
+<div id="back-to-top">
+    <i class="fa fa-angle-up" aria-hidden="true"></i>
+</div>
+
+
+
+@section js{
+    <script>
+        $("input[type=checkbox][name=selectedBranches]:first").attr('checked', 'checked');
+
+    </script>
+}
+
+

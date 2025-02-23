@@ -1,0 +1,242 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    #slider-2 {
+        padding-top: 0px;
+    }
+</style>
+
+@model List<TatliGezi.Models.Article>
+@using TatliGezi.SeoSetting
+<head>
+    <!-- ========== SEO ========== -->
+    <title>Tatli Gezi - Eğlence Ve Alışveriş</title>
+
+    <meta content="Doğal ürünler, tohumlar, bahçe malzemeleri, ilaçlama malzemeleri, eğlenceli ve ilginç konular. " name="description">
+    <meta content="Alışveriş, Eğlence, Blog, Shop, Doğal ürünler, bahçe malzemeleri, ilaçlama malzemeleri, tohumlar " name="keywords">
+    <meta content="Gül İşçioğlu" name="author">
+
+
+
+</head>
+
+<!-- ========== HEADER ========== -->
+
+@Html.Partial("_Header", Model)
+
+<!-- ========== FEATURED ARTICLES ========== -->
+
+
+<section id="slider-2">
+    <div class="swiper-slider">
+        <div class="swiper-wrapper">
+            @foreach (var item in ViewData["SliderGallery"] as IList<TatliGezi.Models.Slider>)
+            {
+                <!-- ITEM -->
+                <div class="swiper-slide">
+                    <!-- IMG -->
+                    <img src="@item.PhotoPath" alt="Image">
+                    <!-- DETAILS -->
+                    <div class="slide-info">
+                        <h2 class="title">
+                            <a href="@item.Url">@item.Content</a>
+                        </h2>
+                        <div class="swiper-button-next"><i class="flaticon-next"></i></div>
+                        <div class="swiper-button-prev"><i class="flaticon-back"></i></div>
+                    </div>
+                </div>
+            }
+        </div>
+
+    </div>
+</section>
+
+<section id="carousel">
+    <div class="swiper-carousel">
+        <div class="swiper-wrapper">
+            <!-- ITEM -->
+            <div class="swiper-slide">
+                <!-- IMG -->
+                <img src="~/Images/Slider2/1-n.jpg" />
+                <!-- DETAILS -->
+                <div class="slide-info" style=" width: fit-content; padding: 0px 10px 0px 10px;">
+                    <h2 class="title" style=" line-height: 11px !important; margin-bottom: revert !important;">
+                        <a href="/yakinda">Doğal Zeytinyağı</a>
+                    </h2>
+
+                </div>
+            </div>
+            <!-- ITEM -->
+            <div class="swiper-slide">
+                <!-- IMG -->
+                <img src="~/Images/Slider2/1-b.jpg" alt="Image">
+                <!-- DETAILS -->
+                <div class="slide-info" style=" width: fit-content; padding: 0px 10px 0px 10px;">
+                    <h2 class="title" style=" line-height: 11px !important; margin-bottom: revert !important;">
+                        @*<a href="https://localhost:44333/urunkategorisi/Bahce-Malzemeleri">Bahçe Malzemeleri</a>*@
+                        <a href="https://tatligezi.com/urunkategorisi/Bahce-Malzemeleri">Bahçe Malzemeleri</a>
+
+                        @*<a href= "Request.Url.ToString()+/urunkategorisi/Bahce-Malzemeleri">Bahçe Malzemeleri</a>*@
+                    </h2>
+
+                </div>
+            </div>
+            <!-- ITEM -->
+            <div class="swiper-slide">
+                <!-- IMG -->
+                <img src="~/Images/Slider2/5-t.jpg" alt="Image">
+                <!-- DETAILS -->
+                <div class="slide-info" style=" width: fit-content; padding: 0px 10px 0px 10px;">
+                    <h2 class="title" style=" line-height: 11px !important; margin-bottom: revert !important;">
+                        @*<a href="https://localhost:44333/urunkategorisi/Bahce-Malzemeleri">Tohumlar</a>*@
+                        <a href="https://tatligezi.com/urunkategorisi/Tohumlar">Tohumlar</a>
+
+                    </h2>
+
+                </div>
+            </div>
+            <div class="swiper-slide">
+                <!-- IMG -->
+                <img src="~/Images/Slider2/1-i.jpg" alt="Image">
+                <!-- DETAILS -->
+                <div class="slide-info" style=" width: fit-content; padding: 0px 10px 0px 10px;">
+                    <h2 class="title" style=" line-height: 11px !important; margin-bottom: revert !important;">
+                        @*<a href="https://localhost:44333/urunkategorisi/Ilaclama-Malzemeleri">İlaçlama Malzemeleri</a>*@
+                        <a href="https://tatligezi.com/urunkategorisi/Ilaclama-Malzemeleri">İlaçlama Malzemeleri</a>
+
+                    </h2>
+
+                </div>
+            </div>
+            <div class="swiper-slide">
+                <!-- IMG -->
+                <img src="~/Images/Slider2/1-h.jpg" alt="Image">
+                <!-- DETAILS -->
+                <div class="slide-info" style=" width: fit-content; padding: 0px 10px 0px 10px;">
+                    <h2 class="title" style=" line-height: 11px !important; margin-bottom: revert !important;">
+                        @*<a href="https://localhost:44333/urunkategorisi/Hayvanlar-ve-Halk-Saglik-Ilaclari">Hayvanlar Ve Halk Sağlık ilaçları</a>*@
+                        <a href="https://tatligezi.com/urunkategorisi/Hayvanlar-ve-Halk-Saglik-Ilaclari">Hayvanlar Ve Halk Sağlık ilaçları</a>
+
+
+                    </h2>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<main class="blog">
+    <div class="container">
+
+        <div class="row">
+            <!-- POSTS -->
+            <div class="col-md-9" id="ajax-main">
+                @Html.Partial("Partial/Article", Model)
+
+
+
+            </div>
+            <!-- SIDEBAR -->
+            <div class="col-md-3">
+                @Html.Partial("Partial/RightHeader", Model)
+
+            </div>
+        </div>
+
+    </div>
+</main>
+
+
+
+
+<!-- ========== FOOTER ========== -->
+@Html.Partial("_Footer", Model)
+
+<!-- ========== BACK TO TOP ========== -->
+<div id="back-to-top">
+    <i class="fa fa-angle-up" aria-hidden="true"></i>
+</div>
+
+
+
+@section js
+{
+
+    @*<script>
+            $('.blogID').click(function () {
+                var id = $('#blogIdValue').val();
+                var title = $('#blogTitle').val();
+                $.ajax({
+                    url: " /Blog/"+ title,
+                    type: "POST",
+                    data: JSON.stringify(id),
+                    contentType: "application/json",
+                });
+            })
+        </script>*@
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+
+            // Gets the video src from the data-src on each button
+
+            var $videoSrc;
+            $('.video-btn').click(function () {
+                $videoSrc = $(this).data("src");
+            });
+            console.log($videoSrc);
+
+            // when the modal is opened autoplay it
+            $('#myModal').on('shown.bs.modal', function (e) {
+
+                // set the video src to autoplay and not to show related video. Youtube related video is like a box of chocolates... you never know what you're gonna get
+                $("#video").attr('src', $videoSrc + "?autoplay=1&amp;modestbranding=1&amp;showinfo=0");
+            })
+
+            // stop playing the youtube video when I close the modal
+            $('#myModal').on('hide.bs.modal', function (e) {
+                // a poor man's stop video
+                $("#video").attr('src', $videoSrc);
+            })
+
+
+        });
+
+    </script>
+
+    <script type="text/javascript">
+        var pageNo = 1;
+        var isPageLoad = true;
+        $(window).scroll(function () {
+            if ($(window).scrollTop() == $(document).height() - $(window).height()) {
+                if (isPageLoad) {
+                    $.ajax({
+                        url: '/anasayfa/',
+                        data: { page: pageNo },
+                        success: function (data) {
+                            $("#ajax-main").append(data);
+                            pageNo++;
+                            if ($.trim(data) == '') {
+                                isPageLoad = false;
+                            }
+                        }
+                    });
+                }
+            }
+        });
+
+    </script>
+
+
+}
+
+
+
+
+
+

@@ -1,0 +1,193 @@
+﻿
+@{
+    ViewBag.Title = "CategoryPage";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@model List<TatliGezi.Models.Article>
+@using TatliGezi.SeoSetting
+
+<style>
+    iframe {
+        border: none;
+        position: absolute;
+        display: block;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: #000;
+    }
+
+    audio {
+        width: -webkit-fill-available;
+        height: 35px;
+    }
+
+    .filter-green {
+        fill: red !important;
+        /*filter: invert(0.5) sepia(1) saturate(5) hue-rotate(175deg);*/
+    }
+
+    body {
+        margin: 2rem;
+    }
+
+    .modal-dialog {
+        max-width: 800px;
+        margin: 30px auto;
+    }
+
+
+
+    .modal-body {
+        position: relative;
+        padding: 0px;
+    }
+
+    .close {
+        position: absolute;
+        right: -30px;
+        top: 0;
+        z-index: 999;
+        font-size: 2rem;
+        font-weight: normal;
+        color: #fff;
+        opacity: 1;
+    }
+</style>
+
+
+<head>
+
+
+    <!-- ========== SEO ========== -->
+    <title>Tatlı Gezi - Blog Kategoriler</title>
+
+    <meta content="Blog eğlenceli ve ilginç konular kategori. " name="description">
+    <meta content="blog, makale, kategori," name="keywords">
+    <meta content="Gül İşçioğlu" name="author">
+
+</head>
+
+
+<!-- ========== HEADER ========== -->
+@Html.Partial("_Header", Model)
+
+<!-- =========== PAGE TITLE ========== -->
+<div class="page-title">
+    <div class="container">
+        <div class="inner">
+            <h1>@ViewData["CategoryName"]</h1>
+            <ol class="breadcrumb">
+                <li><a href="/anasayfa/">AnaSayfa</a></li>
+                <li>@ViewData["CategoryName"]</li>
+            </ol>
+        </div>
+    </div>
+</div>
+
+<!-- ========== MAIN ========== -->
+<main class="blog">
+    <div class="container">
+        <div class="row">
+            <!-- POSTS -->
+            <div class="col-md-9" id="ajax-main">
+                @Html.Partial("Partial/Article", Model)
+
+
+
+
+            </div>
+            <!-- SIDEBAR -->
+            <div class="col-md-3">
+                @Html.Partial("Partial/RightHeader", Model)
+
+            </div>
+        </div>
+    </div>
+</main>
+
+<!-- ========== FOOTER ========== -->
+
+@Html.Partial("_Footer", Model)
+
+<!-- ========== BACK TO TOP ========== -->
+<div id="back-to-top">
+    <i class="fa fa-angle-up" aria-hidden="true"></i>
+</div>
+
+
+
+@section js
+{
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+
+            // Gets the video src from the data-src on each button
+
+            var $videoSrc;
+            $('.video-btn').click(function () {
+                $videoSrc = $(this).data("src");
+            });
+            console.log($videoSrc);
+
+
+
+            // when the modal is opened autoplay it
+            $('#myModal').on('shown.bs.modal', function (e) {
+
+                // set the video src to autoplay and not to show related video. Youtube related video is like a box of chocolates... you never know what you're gonna get
+                $("#video").attr('src', $videoSrc + "?autoplay=1&amp;modestbranding=1&amp;showinfo=0");
+            })
+
+
+
+            // stop playing the youtube video when I close the modal
+            $('#myModal').on('hide.bs.modal', function (e) {
+                // a poor man's stop video
+                $("#video").attr('src', $videoSrc);
+            })
+
+
+
+
+
+
+        });
+
+
+
+    </script>
+
+
+    <script type="text/javascript">
+        var pageNo = 1;
+        var isPageLoad = true;
+        $(window).scroll(function () {
+            if ($(window).scrollTop() == $(document).height() - $(window).height()) {
+                if (isPageLoad) {
+                    $.ajax({
+                        url: '/Home/Index',
+                        data: { page: pageNo },
+                        success: function (data) {
+                            $("#ajax-main").append(data);
+                            pageNo++;
+                            if ($.trim(data) == '') {
+                                isPageLoad = false;
+                            }
+                        }
+                    });
+                }
+            }
+        });
+
+    </script>
+
+
+}
+
+

@@ -1,0 +1,195 @@
+﻿
+@{
+    ViewBag.Title = "Denial";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@model TatliGezi.Models.Shop.UserAdress
+<head>
+    <!-- ========== SEO ========== -->
+    <title>Tatli Gezi - Sipariş Ödeme Reddi</title>
+
+    <meta content="Sipariş ödemesi reddi ve ödeme kontrolü " name="description">
+    <meta content="sipariş, ret, ödeme, başarısız " name="keywords">
+    <meta content="Gül İşçioğlu" name="author">
+
+
+
+</head>
+<!-- ========== HEADER ========== -->
+@Html.Partial("_Header", Model)
+
+<link href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round" rel="stylesheet">
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<style>
+    body {
+        font-family: 'Varela Round', sans-serif;
+    }
+
+    .modal-confirm {
+        width: 260px;
+        margin: 30px auto;
+    }
+
+        .modal-confirm .modal-content {
+            padding: 5px;
+            border-radius: 5px;
+            border: none;
+        }
+
+        .modal-confirm .modal-header {
+            border-bottom: none;
+            position: relative;
+        }
+
+        .modal-confirm h4 {
+            text-align: center;
+            font-size: 26px;
+            margin: 30px 0 -15px;
+        }
+
+        .modal-confirm .form-control, .modal-confirm .btn {
+            min-height: 40px;
+            border-radius: 3px;
+        }
+
+        .modal-confirm .close {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+        }
+
+        .modal-confirm .modal-footer {
+            border: none;
+            text-align: center;
+            border-radius: 5px;
+            font-size: 13px;
+        }
+
+        .modal-confirm .icon-box {
+            color: #fff;
+            position: absolute;
+            margin: 0 auto;
+            left: 0;
+            right: 0;
+            top: -50px;
+            width: 75px;
+            height: 75px;
+            border-radius: 50%;
+            z-index: 9;
+            background: #fd8e9f;
+            padding: 10px;
+            text-align: center;
+            box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.1);
+        }
+
+            .modal-confirm .icon-box i {
+                font-size: 58px;
+                position: relative;
+                top: 1px;
+            }
+
+        .modal-confirm.modal-dialog {
+            margin-top: 70px;
+        }
+
+        .modal-confirm .btn {
+            color: #fff;
+            border-radius: 4px;
+            background: #8ab7ab;
+            text-decoration: none;
+            transition: all 0.4s;
+            line-height: normal;
+            border: none;
+        }
+
+/*            .modal-confirm .btn:hover, .modal-confirm .btn:focus {
+                background: #6fb32b;
+                outline: none;
+            }*/
+
+    .trigger-btn {
+        display: inline-block;
+        margin: 100px auto;
+    }
+</style>
+<!-- =========== PAGE TITLE ========== -->
+<div class="page-title">
+    <div class="container">
+        <div class="inner">
+            <h1>Sipariş Bilgisi</h1>
+            <ol class="breadcrumb">
+                <li><a href="/anasayfa/">Anasayfa</a></li>
+                <li><a href="/magaza/">Mağaza</a></li>
+                <li>Sipariş Bilgisi</li>
+            </ol>
+        </div>
+    </div>
+</div>
+
+<!-- =========== MAIN ========== -->
+<div class="container" style="margin-bottom:30px;margin-top:30px;">
+    <div class="row">
+        <div class="col-lg-8 col-md-offset-2">
+            <form method="post">
+                <div class="product-tabs">
+                    <div class="tab-content">
+
+                        <div class="modal-dialog modal-confirm">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <div class="icon-box">
+                                        <i class="material-icons">close</i>
+                                    </div>
+                                    <h4 class="modal-title">Ödemeniz Onaylanmadı!</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <p class="text-center">Kart bilgilerini tekrar kontrol ediniz.</p>
+                                </div>
+                                <div class="modal-footer">
+                                    @*<button class="btn btn-block" data-dismiss="modal">Ödeme Sayfasına Dön</button>*@
+                                    <a href="/odemebilgileri/@Model.ID" class="btn md green btn-block">Ödeme Sayfasına Dön</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- TAB -->
+                      
+                   
+                    </div>
+
+                </div>
+            </form>
+
+        </div>
+        @*<div class="col-lg-4">
+                @Html.Partial("_PaymentRightHeader", Model)
+
+            </div>*@
+    </div>
+
+
+</div>
+
+<!-- ========== FOOTER ========== -->
+@Html.Partial("_Footer", Model)
+
+
+<!-- ========== BACK TO TOP ========== -->
+<div id="back-to-top">
+    <i class="fa fa-angle-up" aria-hidden="true"></i>
+</div>
+
+
+
+@section js{
+    <script>
+        $("input[type=checkbox][name=selectedBranches]:first").attr('checked', 'checked');
+
+    </script>
+}
+
+

@@ -1,0 +1,658 @@
+﻿
+@{
+    ViewBag.Title = "Detail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model TatliGezi.Models.MultipleData.MainPage
+@using TatliGezi.SeoSetting
+<head>
+    <!-- ========== SEO ========== -->
+    <title>Tatli Gezi - Ürün Detayı</title>
+
+    <meta content="@Model.product.MetaDescription " name="description">
+    <meta content="@Model.product.Keywords " name="keywords">
+    <meta content="Gül İşçioğlu" name="author">
+
+
+
+</head>
+@*<link href="~/Content/Slider/lightslider-master/src/css/lightslider.css" rel="stylesheet" />*@
+@*<style>
+
+        ul {
+            list-style: none outside none;
+            padding-left: 0;
+            margin: 0;
+        }
+
+        .content-slider li {
+            background-color: #ed3020;
+            text-align: center;
+            color: #FFF;
+        }
+
+        .content-slider h3 {
+            margin: 0;
+            padding: 70px 0;
+        }
+
+        .lSSlideOuter .lSPager.lSGallery li {
+            height: auto !important;
+        }
+    </style>*@
+
+
+<style>
+    .categoryHeader {
+        padding-top: 5px;
+        padding-bottom: 5px;
+    }
+
+    .swal2-popup .swal2-styled.swal2-confirm {
+        background-color: #8ab7ab !important;
+    }
+
+
+    div.scroll {
+        width: auto;
+        height: 100vh;
+        overflow: scroll;
+    }
+
+    .scroll::-webkit-scrollbar {
+        width: 12px;
+    }
+
+    .scroll::-webkit-scrollbar-track {
+        -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+        border-radius: 10px;
+    }
+
+    .scroll::-webkit-scrollbar-thumb {
+        border-radius: 10px;
+        -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5);
+    }
+
+    .swal2-popup .swal2-styled.swal2-confirm {
+        background-color: #8ab7ab !important;
+    }
+
+    .box {
+        height: 250px;
+        width: 300px;
+        overflow: hidden;
+    }
+
+    .mywidth {
+        height: 50px;
+    }
+</style>
+
+<head>
+
+
+    <!-- ========== SEO ========== -->
+    <title>@Model.product.ProductName</title>
+    <meta content="" name="description">
+    <meta content="" name="keywords">
+    <meta content="" name="author">
+
+</head>
+<!-- ========== HEADER ========== -->
+@Html.Partial("_Header", Model)
+
+
+<!-- =========== PAGE TITLE ========== -->
+<div class="page-title" style="padding:0px;">
+    <div class="container">
+        <div class="inner">
+            <nav id="main-menu" class="main-menu mobile-menu navbar-collapse">
+
+                @foreach (var item in Model.cList)
+                {
+                    <ul class="nav navbar-nav">
+                        <li class="mobile-menu-title" style="display:none;">MENU</li>
+                        <li>
+
+                            <a class="categoryHeader" href="/urunkategorisi/@Seo.EditAdress(@item.CategoryName)">
+                                <h1>@item.CategoryName</h1>
+
+                            </a>
+
+                        </li>
+                    </ul>
+                }
+            </nav>
+
+        </div>
+    </div>
+</div>
+
+<div class="page-title" style="padding:0px;">
+    <div class="container">
+        <div class="inner">
+            <ol class="breadcrumb">
+                <li><a href="/anasayfa/">AnaSayfa</a></li>
+                <li><a href="/magaza/">Mağaza</a></li>
+                <li><a href="/urunkategorisi/@Seo.EditAdress(Model.product.ProductCategory.CategoryName)/"> @Model.product.ProductCategory.CategoryName</a></li>
+                <li><a href="#">@Model.product.ProductName</a></li>
+            </ol>
+        </div>
+    </div>
+</div>
+<!-- =========== MAIN ========== -->
+
+<main class="shop-details" style="padding: 20px 0;">
+    <div class="container">
+        <div class="row">
+            <!-- SHOP DETAILS -->
+            <div class="row">
+                <div class="col-md-6">
+
+                    <div class="product-slider">
+
+                        <div class="owl-carousel big-images image-gallery">
+                            @foreach (var item in Model.product.ProductImages as List<TatliGezi.Models.Shop.ProductImage>)
+                            {
+                                <!-- ITEM -->
+                                <div class="item image-hover">
+                                    <a href="@item.PhotoPath">
+                                        <img src="@item.PhotoPath" class="img-responsive" alt="@item.ImageDescription">
+                                        <span class="view-text">RESMİ GÖR</span>
+                                    </a>
+                                </div>
+                            }
+                        </div>
+                        <div class="owl-carousel thumbs">
+                            @foreach (var item in Model.product.ProductImages as List<TatliGezi.Models.Shop.ProductImage>)
+                            {
+                                <div class="item"><img src="@item.PhotoPath" class="img-responsive" alt="@item.ImageDescription"></div>
+                            }
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="col-md-6">
+                    <div class="shop-item-details">
+                        <div class="product-inner">
+                            <h2 class="product-title"><a href="product-details.html">@Model.product.ProductName</a></h2>
+
+                            <h4 class="product-title" style="font-style: italic;"><a href="product-details.html">@Model.product.Brand</a></h4>
+
+                            <div class="product-price">
+                                @if (Model.product.Discount == 0)
+                                {
+                                    <div class="product-price">
+                                        <span class="product-price simge-tl" style="font-size:24px !important"> @Model.product.ProductPrice.ToString("##.##") &#8378;</span>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="row">
+                                        <div class="col-lg-3 col-md-3 col-lg-3 col-sm-3 col-xs-3">
+                                            <div class="product-price">
+
+
+                                                <span class="product-price-del simge-tl" style="font-size:24px !important"><del>@Model.product.ProductPrice.ToString("##.##") &#8378;</del></span>
+                                            </div>
+                                            <div class="product-price">
+                                                <span class="product-price simge-tl" style="font-size:24px !important">@Model.product.ProductDiscountPrice.ToString("##.##") &#8378;</span>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+                                            <span class="btn md pink add-to-cart addBasket" style="padding: 5px 10px !important;">%@Model.product.Discount.ToString("##") İNDİRİM</span>
+
+                                        </div>
+
+
+
+                                    </div>
+                                }
+                            </div>
+
+                            @if (Model.product.AverageRate != null)
+                            {
+                                <div class="product-rating mt30">
+                                    <input type="hidden" id="ratingValue" name="ratingValue" value="@Model.product.AverageRate">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="product-rating-stars">
+
+                                            </div>
+
+                                            <span>
+
+                                                (@Model.product.ProductComments.Where(x => x.IsDelete == false).Count()) değerlendirmeye göre ortalama  @Convert.ToDecimal(Model.product.AverageRate).ToString("#.#") puan.
+                                            </span>
+
+
+                                        </div>
+                                    </div>
+
+
+                                </div>
+
+                            }
+
+
+
+                            <div class="product-cart mt50">
+                                <div class="input-group spinner product-quantity">
+                                    <label class="">Adet:</label>
+                                    @*<input type="text" id="quantityValue" class="form-control" value="1" min="1" max="10">*@
+                                    <input type="text" class="form-control" id="quantityValue" value="1" min="1" max="@Model.product.Stock">
+
+                                    <div class="input-group-btn-vertical">
+                                        <button id="upQuantity" class="btn" type="button"><i class="fa fa-angle-up" aria-hidden="true"></i></button>
+                                        <button id="downQuantity" class="btn" type="button"><i class="fa fa-angle-down" aria-hidden="true"></i></button>
+                                    </div>
+                                </div>
+                                <input id="stock" name="stock" type="hidden" value=@Model.product.Stock>
+
+                                @if (Model.product.Stock != 0)
+                                {
+                                    <button class="btn md green add-to-cart addBasket" data-pID="@Model.product.ID" data-toggle="modal" data-target="#myModal">
+                                        Sepete Ekle
+                                    </button>
+                                }
+                                else
+                                {
+                                    <span class="btn md pink add-to-cart addBasket">TÜKENDİ</span>
+
+                                }
+
+                            </div>
+                            <div class="product-tabs mt50">
+                                <!-- Nav tabs -->
+                                <ul class="nav nav-tabs" role="tablist">
+                                    <li role="presentation" class="active"><a href="#description" aria-controls="description" role="tab" data-toggle="tab">Açıklama</a></li>
+                                    <li role="presentation"><a href="#reviews" aria-controls="reviews" role="tab" data-toggle="tab">Yorumlar (@Model.product.ProductComments.Where(x => x.IsDelete == false).Count())</a></li>
+
+                                </ul>
+                                <div class="tab-content scroll" style="padding: 50px !important; ">
+                                    <!-- TAB -->
+                                    <div role="tabpanel" class="tab-pane active" id="description">
+                                        <p>@Html.Raw(Model.product.Description)</p>
+
+                                    </div>
+
+                                    <div role="tabpanel" class="tab-pane" id="reviews">
+
+                                        @foreach (var item in Model.product.ProductComments.Where(x => x.IsDelete == false))
+                                        {
+                                        <div class="review mt20 mb20">
+                                            @if (item.User.PhotoPath != null)
+                                            {
+                                                <div class="reviewer-avatar">
+                                                    <img src="@item.User.PhotoPath" alt="Image">
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                <div class="reviewer-avatar">
+                                                    <img width="60" height="60" alt="Image" avatar="@item.User.FullName">
+                                                </div>
+                                            }
+
+                                            <h4 class="review-title">@item.User.FullName</h4>
+                                            <div class="rating">
+                                                @for (var j = 0; j < Convert.ToInt32(item.Rate); j++)
+                                                {
+                                                    <i class="fa fa-star" aria-hidden="true"></i>
+
+                                                }
+                                                @for (var k = 0; k < 5 - Convert.ToInt32(item.Rate); k++)
+                                                {
+                                                    <i class="fa fa-star-o" aria-hidden="true"></i>
+
+                                                }
+                                            </div>
+                                            
+                                            <p class="review-details">@item.CommentDetail </p>
+
+
+                                        </div>
+                                        }
+
+
+                                        <h4 class="mt80">Yorum Ekle</h4>
+                                        <form class="mt30">
+
+                                            @if (Request.Cookies["Member"] != null)
+                                            {
+                                                <div class="row">
+
+                                                    <div class="col-md-12">
+                                                        <textarea class="form-control" id="commentDetail" name="message" placeholder="Yorumunuz..."></textarea>
+                                                    </div>
+
+                                                    <div class="col-md-6 col-sm-6">
+                                                        <div id="status"></div>
+
+                                                        <div class="user-rating">
+                                                            <span>Puanın:</span>
+                                                            <label>
+                                                                <input type="radio" name="rating" value="5" title="5 stars"> 5
+                                                            </label>
+                                                            <label>
+                                                                <input type="radio" name="rating" value="4" title="4 stars"> 4
+                                                            </label>
+                                                            <label>
+                                                                <input type="radio" name="rating" value="3" title="3 stars"> 3
+                                                            </label>
+                                                            <label>
+                                                                <input type="radio" name="rating" value="2" title="2 stars"> 2
+                                                            </label>
+                                                            <label>
+                                                                <input type="radio" name="rating" value="1" title="1 star"> 1
+                                                            </label>
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="col-md-6 col-sm-6">
+                                                        <button class="btn pull-right mt20 mb20" id="CommentAdd">Yorumu Gönder</button>
+                                                    </div>
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                <div class="row">
+
+
+
+                                                    <div class="col-md-12 col-sm-12">
+                                                        <input type="hidden" name="returnUrl" value="@ViewBag.returnUrl" />
+
+                                                        <a href="/GirişYap/" class="btn pull-right mt20 mb20">ÜRÜNÜ DEĞERLENDİR</a>
+
+                                                    </div>
+                                                </div>
+                                            }
+                                        </form>
+                                    </div>
+
+                                </div>
+                                <!-- REALATED PRODUCTS -->
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="product-tabs mt50">
+                <!-- REALATED PRODUCTS -->
+                <h4 class="mt50 mb20 text-uppercase">Benzer Ürünler</h4>
+                <div class="row">
+                    <!-- ITEM -->
+                    @foreach (var item in ViewData["ProductList"] as List<TatliGezi.Models.Shop.Product>)
+                    {
+                        <div class="col-md-3 col-sm-3">
+                            <div class="shop-item-grid">
+                                <figure class="image-hover">
+                                    <a href="/urun/@Seo.EditAdress(@item.ProductName)/">
+                                        <img src="@item.ImageView" class="img-responsive" style=" width: 60%;" alt="Image">
+                                        <span class="view-text">ÜRÜNÜ GÖR</span>
+                                    </a>
+                                    <button class="btn sm pink add-to-cart">Sepete Ekle</button>
+                                </figure>
+                                <div class="product-inner">
+                                    <h3 class="product-title"><a href="product-details.html">@item.ProductName</a></h3>
+                                    @if (item.Discount == 0)
+                                    {
+                                        <div class="product-price">
+                                            <span class="product-price simge-tl"> @item.ProductPrice.ToString("##.##") &#8378;</span>
+                                        </div>
+                                    }
+                                    else
+                                    {
+
+                                        <div class="product-price">
+                                            <span class="product-price-del"><del>@item.ProductPrice.ToString("##.##") &#8378;</del></span>
+                                            <span class="product-price">@item.ProductDiscountPrice.ToString("##.##") &#8378;</span>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                        <!-- ITEM -->
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+
+
+<!-- ========== FOOTER ========== -->
+@Html.Partial("_Footer", Model)
+
+
+<!-- ========== BACK TO TOP ========== -->
+<div id="back-to-top">
+    <i class="fa fa-angle-up" aria-hidden="true"></i>
+</div>
+
+
+<!-- ========== JAVASCRIPT ========== -->
+<link href="~/Content/sweetalertexample-master/sweetalert2.min.css" rel="stylesheet" />
+
+@section js{
+
+    <script src="~/Content/sweetalertexample-master/sweetalert2.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+    <script>
+        $(function () {
+
+            var quantity = 1;
+
+
+            $("#upQuantity").click(function () {
+                quantity += 1;
+
+            });
+
+            $("#downQuantity").click(function () {
+                quantity -= 1;
+
+            });
+
+            $(".addBasket").on("click", function () {
+
+
+                var pid = $(this).attr("data-pID");
+                $.post("/Basket/AddProduct?productID=" + pid + "&quantity= " + quantity, function (data) {
+
+                    var stockAlert = data.Alert;
+
+                    if (stockAlert !== null) {
+
+
+                        alert(data.Alert);
+
+                    }
+                    else {
+                        Swal.fire(
+                            'Tebrikler!',
+                            'Ürününüz sepete eklenmiştir!',
+                            'success'
+                        )
+                        setTimeout(function () {
+                            window.location.reload(1);
+                        }, 1000);
+                    }
+
+                });
+
+
+                return false;
+
+            });
+
+        });
+
+    </script>
+
+    <script>
+
+        var ratingValue = parseFloat($('#ratingValue').val().replace(',', '.').replace(' ', '')),
+            rounded = (ratingValue | 0),
+            str;
+
+        for (var j = 0; j < 5; j++) {
+            str = '<i class="fa ';
+            if (j < rounded) {
+                str += "fa-star";
+            } else if ((ratingValue - j) > 0 && (ratingValue - j) < 1) {
+                str += "fa-star-half-o";
+            } else {
+                str += "fa-star-o";
+            }
+            str += '" aria-hidden="true"></i>';
+            $(".product-rating-stars").append(str);
+        }
+
+    </script>
+    <script>
+
+    $("#CommentAdd").click(function () {
+        var mess1 = new Object();
+
+        mess1.CommentDetail = $("#commentDetail").val();
+        mess1.id = '@Model.product.ID';
+
+        //if ($(".user-rating :radio:checked").length == 0) {
+        //    $('#status').html("nothing checked");
+        //    return false;
+        //} else {
+        //    $('#status').html('You picked ' + $('input:radio[name=rating]:checked').val());
+        //}
+        mess1.Rate = $('input:radio[name=rating]:checked').val();
+
+        $.ajax({
+            type: 'POST',
+            url: '/Shop/Comment/',
+            data: mess1,
+            success: function (data) {
+
+                $("#commentDetail").val('');
+                $("ul").prepend("<li>" + data.CommentDetail + "</li>");
+                alert("Yorumunuz gönderildi.")
+                setTimeout(function () {
+                    window.location.reload(1);
+                }, 2500);
+            }
+        })
+    })
+
+
+
+    </script>
+
+    <script type="text/javascript">
+
+        /*
+         * OdoAvatar
+         * Adhersh M Nair
+         * Create Image avatar based on Initials
+         */
+        (function (w, d) {
+
+
+            function OdoAvatar(name, size) {
+
+                name = name || '';
+                size = size || 60;
+
+                var colours = [
+                    "#1abc9c", "#2ecc71", "#3498db", "#9b59b6", "#34495e", "#16a085", "#27ae60", "#2980b9", "#8e44ad", "#2c3e50",
+                    "#f1c40f", "#e67e22", "#e74c3c", "#ecf0f1", "#95a5a6", "#f39c12", "#d35400", "#c0392b", "#bdc3c7", "#7f8c8d"
+                ],
+
+                    nameSplit = String(name).toUpperCase().split(' '),
+                    initials, charIndex, colourIndex, canvas, context, dataURI;
+
+
+                if (nameSplit.length == 1) {
+                    initials = nameSplit[0] ? nameSplit[0].charAt(0) : '?';
+                } else if (nameSplit.length == 2) {
+                    initials = nameSplit[0].charAt(0) + nameSplit[1].charAt(0);
+                } else {
+                    initials = nameSplit[0].charAt(0) + nameSplit[1].charAt(0) + nameSplit[2].charAt(0);
+                }
+
+                if (w.devicePixelRatio) {
+                    size = (size * w.devicePixelRatio);
+                }
+
+                charIndex = (initials == '?' ? 72 : initials.charCodeAt(0)) - 64;
+                colourIndex = charIndex % 20;
+                canvas = d.createElement('canvas');
+                canvas.width = size;
+                canvas.height = size;
+                context = canvas.getContext("2d");
+
+                context.fillStyle = colours[colourIndex - 1];
+                context.fillRect(0, 0, canvas.width, canvas.height);
+                context.font = Math.round(canvas.width / 3) + "px Arial";
+                context.textAlign = "center";
+                context.fillStyle = "#FFF";
+                context.fillText(initials, size / 2, size / 1.6);
+
+                dataURI = canvas.toDataURL();
+                canvas = null;
+
+                return dataURI;
+            }
+
+            OdoAvatar.transform = function () {
+
+                Array.prototype.forEach.call(d.querySelectorAll('img[avatar]'), function (img, name) {
+                    name = img.getAttribute('avatar');
+                    img.src = OdoAvatar(name, img.getAttribute('width'));
+                    img.removeAttribute('avatar');
+                    img.setAttribute('alt', name);
+                });
+            };
+
+
+            // AMD support
+            if (typeof define === 'function' && define.amd) {
+
+                define(function () { return OdoAvatar; });
+
+                // CommonJS and Node.js module support.
+            } else if (typeof exports !== 'undefined') {
+
+                // Support Node.js specific `module.exports` (which can be a function)
+                if (typeof module != 'undefined' && module.exports) {
+                    exports = module.exports = OdoAvatar;
+                }
+
+                // But always support CommonJS module 1.1.1 spec (`exports` cannot be a function)
+                exports.OdoAvatar = OdoAvatar;
+
+            } else {
+
+                window.OdoAvatar = OdoAvatar;
+
+                d.addEventListener('DOMContentLoaded', function (event) {
+                    OdoAvatar.transform();
+                });
+            }
+
+        })(window, document);
+
+    </script>
+
+}
+
+
+

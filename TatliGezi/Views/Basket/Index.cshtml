@@ -1,0 +1,335 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@model List<TatliGezi.Models.Shop.Basket>
+
+<head>
+    <!-- ========== SEO ========== -->
+    @*<title>Tatli Gezi - Blog And Shop</title>*@
+    <title>Tatli Gezi - Alışveriş Sepeti</title>
+
+    <meta content="Doğal ürünler, tohumlar, bahçe malzemeleri, ilaçlama malzemeleri alışveriş sepeti " name="description">
+    <meta content="Alışveriş, Eğlence, Shop, Doğal ürünler, bahçe malzemeleri, ilaçlama malzemeleri, tohumlar " name="keywords">
+    <meta content="Gül İşçioğlu" name="author">
+
+
+
+</head>
+
+<!-- ========== HEADER ========== -->
+@Html.Partial("_Header", Model)
+
+<!-- =========== PAGE TITLE ========== -->
+<div class="page-title">
+    <div class="container">
+        <div class="inner">
+            <h1>Sepetim</h1>
+            <ol class="breadcrumb">
+                <li><a href="/anasayfa/">AnaSayfa</a></li>
+                <li><a href="/magaza/">Mağaza</a></li>
+                <li>Sepetim</li>
+            </ol>
+        </div>
+    </div>
+</div>
+
+<!-- =========== MAIN ========== -->
+<main id="shopping-cart-page">
+    <div class="container" style="margin-bottom:30px;margin-top:30px;">
+
+        @if (Model.Count == 0)
+        {
+
+            <h1>Sepetinizde ürün bulunmamaktadır.</h1>
+
+        }
+        else
+        {
+            <!-- SOPPING CART -->
+            using (Html.BeginForm())
+            {
+
+
+                <div class="row">
+                    <div class="col-lg-9">
+
+                        <form method="post">
+
+                            <div class="table-responsive-md">
+                                <table class="table shopping-cart-table">
+                                    <thead>
+                                        <tr class="shopping-cart-table-header">
+                                            <th hidden></th>
+                                            <th scope="col" class="a-center" rowspan="1">&nbsp;</th>
+                                            <th scope="col" class="a-center" rowspan="1"><span class="nobr">Ürün Adı</span></th>
+                                            <th scope="col" class="a-center" rowspan="1" @*class="nobr"*@>Adet</th>
+                                            <th scope="col" class="a-center" colspan="1"><span class="nobr">Toplam Tutar</span></th>
+
+                                            <th scope="col" rowspan="1" class="a-center" style="border-right: 4px double #c2c2c2 !important;">Sil</th>
+                                        </tr>
+                                    </thead>
+                                    @foreach (var item in Model)
+                                    {
+
+                                        <tbody>
+
+                                            <!-- ITEM -->
+                                            <tr class="item">
+                                                <td hidden class="basketID"> @item.ID </td>
+                                                <td class="class=" col-md-1 align-middle">
+                                                    <img class="img-rounded img-responsive">
+                                                    <figure class="image-hover">
+                                                        <a href="shop-details.html" class="product-image">
+                                                            <img src="@item.Product.ImageView" style="width:100%;" class="text-center"><img class="img-responsive">
+                                                            <span class="view-text sm">Ürünü Gör</span>
+                                                        </a>
+                                                    </figure>
+                                                </td>
+                                                <td>
+                                                    <h5 class="product-name">
+                                                        <a href="shop-details.html">@item.Product.ProductName</a>
+                                                    </h5>
+                                                </td>
+                                                <td class="a-center">
+                                                    <div class="input-group spinner">
+                                                        <input type="text" class="form-control quantityValue" value="@item.Quantity" min="1" max="@item.Product.Stock">
+                                                        <div class="input-group-btn-vertical">
+                                                            <button class="btn upQuantity " id="@item.Product.ID" onClick="upQuantityClick(this.id)" type="button"><i class="fa fa-angle-up" aria-hidden="true"></i></button>
+                                                            <button class="btn downQuantity" id="@item.Product.ID" onClick="downQuantityClick(this.id)" type="button"><i class="fa fa-angle-down" aria-hidden="true"></i></button>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                @if (item.Product.Discount == 0)
+                                                {
+                                                    <td class="a-center" style="line-height: 41px; font-weight: bold;">@item.ProductQuantityPrice.ToString("##.##") &#8378;</td>
+
+                                                }
+                                                else
+                                                {
+                                                    <td class="a-center" style="line-height: 41px; font-weight: bold; ">@item.ProductQuantityDiscountPrice.ToString("##.##") &#8378;</td>
+
+                                                }
+                                                <td class="a-center" style=" line-height: 41px;">
+                                                    <a onclick="sil('/Basket/Delete/','@item.ID')" title="Remove item" style="cursor:pointer" class="remove-item"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+                                                </td>
+                                            </tr>
+                                            <!-- ITEM -->
+
+                                        </tbody>
+
+                                    }
+                                    <tfoot>
+
+                                        <tr>
+                                            <td colspan="50" class="a-right pt50" style="padding-right:inherit;">
+
+                                                @if (Request.Cookies["Member"] == null)
+                                                {
+                                                    <a href="/girisyap" class="btn md green">SEPETİ ONAYLA</a>
+
+                                                }
+                                                else
+                                                {
+                                                    if (ViewData["Adress"] != null)
+                                                    {
+                                                        <a href="/adresbilgisi" class="btn md green">SEPETİ ONAYLA</a>
+
+                                                    }
+                                                    else
+                                                    {
+                                                        <a href="/adresekle" class="btn md green">SEPETİ ONAYLA</a>
+                                                    }
+
+
+                                                }
+
+                                                <button type="reset" id="cleanBasket" class="btn md pink">SEPETİ TEMİZLE</button>
+
+
+
+                                            </td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+
+                        </form>
+                    </div>
+                    <div class="col-lg-3">
+
+                        @*@Html.Partial("_PaymentRightHeader", Model)*@
+                        <aside class="widget mb30">
+                            <h4 class="widget-title">SİPARİŞ ÖZETİ</h4>
+
+                            <div class="inner">
+
+                                <ul class="categories">
+
+
+                                    <li style="border-bottom: none !important;"><a> Ürün Toplamı: <span class="pull-right" style="font-weight: bold;"> @ViewData["TotalPrice"] &#8378;</span></a></li>
+
+                                    <li><a>Kargo Toplam: <span class="pull-right" style="font-weight: bold;"> @ViewData["CargoPrice"] &#8378;</span></a></li>
+
+                                    <li><a>Toplam: <span class="pull-right" style="font-weight: bold;"> @ViewData["TotalPayment"] &#8378;</span></a></li>
+
+                                </ul>
+
+                                <div colspan="50" class="a-right pt50" style=" padding-top: 30px; margin-bottom: 30px;">
+
+                                    @if (Request.Cookies["Member"] == null)
+                                    {
+                                        <a href="/girisyap" class="btn md green">SEPETİ ONAYLA</a>
+
+                                    }
+                                    else
+                                    {
+                                        if (ViewData["Adress"] != null)
+                                        {
+                                            <a href="/adresbilgisi" class="btn md green">SEPETİ ONAYLA</a>
+
+                                        }
+                                        else
+                                        {
+                                            <a href="/adresekle" class="btn md green">SEPETİ ONAYLA</a>
+                                        }
+
+
+                                    }
+
+
+
+                                </div>
+                            </div>
+
+                        </aside>
+
+                    </div>
+                </div>
+            }
+        }
+
+
+
+    </div>
+</main>
+
+<!-- ========== FOOTER ========== -->
+@Html.Partial("_Footer", Model)
+
+
+<!-- ========== BACK TO TOP ========== -->
+<div id="back-to-top">
+    <i class="fa fa-angle-up" aria-hidden="true"></i>
+</div>
+
+
+@section js{
+    <script>
+     
+        function upQuantityClick(productID) {
+            $.ajax({
+                url: '/Basket/UpQuantity',
+                type: 'POST',
+                dataType: 'json',
+
+                data: { id: productID },
+
+                success: function (data) {
+                    var stockAlert = data.Alert;
+
+                    if (stockAlert !== null) {
+
+
+                        alert(data.Alert);
+
+                    }
+                    else {
+                        window.location.href = "/sepetim/";
+
+                    }
+                }
+
+            })
+            }
+    </script>
+    <script>
+        function downQuantityClick(productID) {
+            var mf = $("input[type=text]").map(function () {
+                return this.value;
+            }).get();
+            console.log(mf);
+            if ($(".quantityValue").val() < 1) {
+                $('.downQuantity').attr("aria-hidden", "false")
+            }
+            else {
+                $.ajax({
+                    url: '/Basket/DownQuantity',
+                    type: 'POST',
+                    dataType: 'json',
+
+                    data: { id: productID },
+
+                    success: function (data) {
+                        var stockAlert = data.Alert;
+
+                        if (stockAlert !== null) {
+
+
+                            alert(data.Alert);
+
+                        }
+                        else {
+                            window.location.href = "/sepetim/";
+
+                        }
+                    }
+
+                })
+            }
+           
+         
+        }
+        //$(".downQuantity").on("click", function () {
+        //    if ($("#quantityValue").val() != 1) {
+        //        var basketID = $('basketID').val();
+        //        $.ajax({
+        //            url: '/Basket/DownQuantity',
+        //            type: 'POST',
+        //            dataType: 'json',
+
+        //            data: { ID: $("#basketID").text() },
+        //            success: function () {
+        //                window.location.href = "/sepetim/";
+        //            }
+
+        //        })
+        //    }
+
+
+        //})
+    </script>
+
+    <script>
+        $("#cleanBasket").on("click", function () {
+            $.ajax({
+                url: '/Basket/CleanBasket',
+                type: 'POST',
+                dataType: 'json',
+
+                data: {},
+                success: function () {
+                    location.reload();
+                }
+
+            })
+        })
+    </script>
+
+}
+
+
+

@@ -1,0 +1,207 @@
+﻿
+@{
+    ViewBag.Title = "ProductImage";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+
+
+@model TatliGezi.Models.Shop.Product
+
+<style>
+    input[type=text], select {
+        width: 40%;
+        padding: 12px 20px;
+        margin: 8px 0;
+        display: inline-block;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+</style>
+@using (Html.BeginForm("UploadFileSample", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-10">
+
+
+                            <div class="form-group">
+
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">Ürün Bilgileri</h4>
+                                    </div>
+
+
+                                    <h5 class="modal-title">@Model.ProductName </h5>
+                                    <a href="/Admin/Product/ProductEdit/@Model.ID" class="fa-link">Düzenle</a>
+                                </div>
+
+
+                            </div>
+
+
+
+                            <input onClick="ResimEkle()" type="button" class="btn btn-info btn blok" id="resimUrun" value="Resim Ekle" />
+                            @*<input onClick="ResimSil()" type="button" class="btn btn-danger btn blok" id="resimUrunSil" value="Resim Sil" />*@
+                            <a onclick="window.close();">close<a>
+
+
+                                    <div class="form-group" id="ResimEkleme">
+                                        <br />
+
+
+                                        <input id="sinir" name="sinir" type="hidden" value="0">
+
+                                        <input id="sayi" name="sayi" type="hidden" value="a_0">
+
+
+
+
+                                    </div>
+
+                                    <div class="form-group" id="btnekleme">
+                                        <input type="button" id="btnImageSave" class="btn btn-info btn blok " value="Kaydet">
+                                        <input type="button" id="ExitBtn" class="btn btn-info btn blok " value="İptal">
+
+
+                                    </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+
+}
+
+
+@section js{
+    <script>
+        $('#btnImageSave').click(function () {
+
+            var _FormData = new FormData();
+
+
+            var _Items = $('#ResimEkleme .Img');
+
+
+            for (var i = 0; i < _Items.length; i++) {
+                var _Description = $(_Items[i]).find('input[type="text"]').val();
+                var _Image = $(_Items[i]).find('input[type="file"]').get(0);
+
+                if (_Image.files.length > 0)
+                    _FormData.append(_Description,_Image.files[0]);
+                else {
+                    alert("Lütfen resimleri doldurunuz!!")
+                    error.call("hata");
+                }
+
+
+            }
+
+            $.ajax({
+                url: '/Admin/Product/ProductImageDetail',
+                type: "POST",
+                contentType: false,
+                processData: false,
+                data: _FormData,
+                success: function (result) {
+                    if (result == "")
+                        alert('Resimler Kaydedildi');
+                    window.location.href = "/Admin/Product/Index/";
+
+
+                },
+                error: function (err) {
+                    //MessageBox(err.statusText);
+                }
+            });
+
+        })
+
+        function ResimEkle() {
+            var ekleme_siniri = 50;
+            var sinir = $('#sinir').val();
+            if (sinir < ekleme_siniri) {
+
+                var _html =
+                    '<div class="Img">' +
+
+                    ' <input type="text"  id="info_" class="ImageDetail">' +
+
+                    ' <input type="file" class="Image">' +
+
+                    ' <input type="button" class="Image btn btn-danger btn blok" onClick = "window.close();"  value="Sil">' +
+
+                    '</br>'
+                '</div>';
+
+                $('#ResimEkleme').append(_html);
+                var say = $('#sayi').val();
+                var name = say + 1;
+                $('#sayi').val(name);
+
+                var son_sinir = ++sinir;
+                $('#sinir').val(son_sinir);
+
+
+            }
+
+        }
+
+        function close() {
+
+            $('.Img').remove();
+
+        };
+        $("#resimUrun").click(function () {
+            $("#btnekleme").fadeIn();
+
+        });
+
+        $("#ExitBtn").click(function () {
+            $("#btnImageSave").fadeOut();
+            $("#ResimEkleme").fadeOut();
+
+
+        });
+
+    </script>
+    <script>
+        function ResimSil() {
+            var ekleme_siniri = 50;
+            var sinir = $('#sinir').val();
+            if (sinir < ekleme_siniri) {
+                var _html =
+                    '<div class="Img">' +
+                    ' <input type="text" class="myA"  id="info_" class="CvpDetail">' +
+
+                    ' <input type="file" class="CvpImage">' +
+                    '</br>'
+                '</div>';
+                $('#ResimEkleme').remove();
+                var say = $('#sayi').val();
+                var name = say - 1;
+                $('#sayi').val(name);
+                var son_sinir = 0;
+                $('#sinir').val(son_sinir);
+
+
+            }
+
+        }
+        $("#resimUrunSil").click(function () {
+
+        });
+
+    </script>
+}

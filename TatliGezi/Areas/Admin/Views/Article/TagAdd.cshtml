@@ -1,0 +1,181 @@
+﻿
+@{
+    ViewBag.Title = "TagAdd";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+
+
+@model TatliGezi.Models.ArticleTag
+
+<style>
+    input[type=text], select {
+        width: 40%;
+        padding: 12px 20px;
+        margin: 8px 0;
+        display: inline-block;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+</style>
+@using (Html.BeginForm("UploadFileSample", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-10">
+
+
+                            @*<div class="form-group">
+
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title">Makale</h4>
+                                        </div>
+
+
+                                        <h5 class="modal-title">@Model.Article.ArticleContent</h5>
+
+                                    </div>
+
+
+                                </div>*@
+
+
+                            <input onClick="ekle()" type="button" class="btn btn-info btn blok" id="cevap" value="Etiket Ekle" />
+
+
+
+                            <div class="form-group" id="ekleme">
+                                <br />
+
+
+                                <input id="sinir" name="sinir" type="hidden" value="0">
+
+                                <input id="sayi" name="sayi" type="hidden" value="a_0">
+
+
+
+
+                            </div>
+
+                            <div class="form-group" id="btnekleme1" style="display:none;">
+
+                                <input type="button" id="btnSave" class="btn btn-info btn blok " value="Kaydet">
+                                @*<input type="button" id="ExitBtn1" class="btn btn-info btn blok " value="İptal">*@
+
+
+                            </div>
+
+
+
+
+
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+}
+
+
+@section js{
+
+
+    <script>
+        $('#btnSave').click(function () {
+
+
+
+            var _Items = $('#ekleme .Cvp');
+            var itemList = new Array();
+
+
+            for (var i = 0; i < _Items.length; i++) {
+                var _Detail = $(_Items[i]).find('input[type="text"]').val();
+
+
+                var _Name = _Detail ;
+                itemList.push(_Name);
+
+            }
+
+            $.ajax({
+                url: '/Admin/Article/Tags',
+                type: "POST",
+
+                data: { "items": itemList },
+                success: function (result) {
+                    if (result == "")
+                        window.location.href = "/Admin/Article/Index/";
+                        alert('Etiketler Kaydedildi');
+
+                },
+                error: function (err) {
+                    MessageBox(err.statusText);
+                }
+            });
+
+        })
+         function ekle() {
+            var ekleme_siniri = 25;
+            var sinir = $('#sinir').val();
+              if (sinir < ekleme_siniri) {
+                  var _html =
+                      '<div class="Cvp">' +
+                      ' <input type="text" class="myA"  id="info_" class="CvpDetail">' +
+                      '</div>';
+
+                $('#ekleme').append(_html);
+                var say = $('#sayi').val();
+                var name = say + 1;
+                $('#sayi').val(name);
+                var son_sinir = ++sinir;
+                  $('#sinir').val(son_sinir);
+
+
+             }
+
+
+
+        }
+        $("#cevap").click(function () {
+            $("#btnekleme1").fadeIn();
+            $("#resimCevap").fadeOut();
+
+        });
+                $("#ExitBtn1").click(function () {
+                    $("#btnekleme1").fadeOut();
+                    $("#ekleme").fadeOut();
+
+                    $("#resimCevap").fadeIn();
+
+                });
+
+
+        //var btn1 =
+        //    '<div >' +
+        //    ' <input type="button" id="btnSave" class="btn btn-info btn blok " value="Kaydet ve Yeni Soruya Geç">' +
+        //    ' <input type="button" id="FinishQuiz" class="btn btn-info btn blok " value="Testi Bitir">' +
+
+        //    '</div>';
+        //$('#btnekleme1').append(btn1);
+
+    </script>
+
+
+}
+
+
+
+
+

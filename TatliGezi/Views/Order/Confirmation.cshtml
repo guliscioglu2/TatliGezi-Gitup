@@ -1,0 +1,269 @@
+﻿
+@{
+    ViewBag.Title = "Confirmation";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@model TatliGezi.Models.Shop.Order
+<head>
+    <!-- ========== SEO ========== -->
+    <title>Tatli Gezi - Sipariş Onayı</title>
+
+    <meta content="Sipariş onay bilgisi ve detayı " name="description">
+    <meta content="sipariş, onay, onay detayı" name="keywords">
+    <meta content="Gül İşçioğlu" name="author">
+
+
+
+</head>
+<!-- ========== HEADER ========== -->
+@Html.Partial("_Header", Model)
+
+<link href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round" rel="stylesheet">
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<style>
+    body {
+        font-family: 'Varela Round', sans-serif;
+    }
+
+    .modal-confirm {
+        width: 260px;
+        margin: 30px auto;
+    }
+
+        .modal-confirm .modal-content {
+            padding: 5px;
+            border-radius: 5px;
+            border: none;
+        }
+
+        .modal-confirm .modal-header {
+            border-bottom: none;
+            position: relative;
+        }
+
+        .modal-confirm h4 {
+            text-align: center;
+            font-size: 26px;
+            margin: 30px 0 -15px;
+        }
+
+        .modal-confirm .form-control, .modal-confirm .btn {
+            min-height: 40px;
+            border-radius: 3px;
+        }
+
+        .modal-confirm .close {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+        }
+
+        .modal-confirm .modal-footer {
+            border: none;
+            text-align: center;
+            border-radius: 5px;
+            font-size: 13px;
+        }
+
+        .modal-confirm .icon-box {
+            color: #fff;
+            position: absolute;
+            margin: 0 auto;
+            left: 0;
+            right: 0;
+            top: -50px;
+            width: 75px;
+            height: 75px;
+            border-radius: 50%;
+            z-index: 9;
+            background: #8ab7ab;
+            padding: 12px;
+            text-align: center;
+            box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.1);
+        }
+
+            .modal-confirm .icon-box i {
+                font-size: 58px;
+                position: relative;
+                top: 1px;
+            }
+
+        .modal-confirm.modal-dialog {
+            margin-top: 50px;
+        }
+
+        .modal-confirm .btn {
+            color: #fff;
+            border-radius: 4px;
+            background: #8ab7ab;
+            text-decoration: none;
+            transition: all 0.4s;
+            line-height: normal;
+            border: none;
+        }
+
+            .modal-confirm .btn:hover, .modal-confirm .btn:focus {
+                background: #6fb32b;
+                outline: none;
+            }
+
+    .trigger-btn {
+        display: inline-block;
+        margin: 100px auto;
+    }
+</style>
+<!-- =========== PAGE TITLE ========== -->
+<div class="page-title">
+    <div class="container">
+        <div class="inner">
+            <h1>Sipariş Onay</h1>
+            <ol class="breadcrumb">
+                <li><a href="/anasayfa/">Anasayfa</a></li>
+                <li><a href="/magaza/">Mağaza</a></li>
+                <li>Sipariş Onay</li>
+            </ol>
+        </div>
+    </div>
+</div>
+
+<!-- =========== MAIN ========== -->
+<div class="container" style="margin-bottom:20px;">
+    <div class="row">
+        <div class="col-lg-8 col-md-offset-2">
+            <form method="post">
+                <div class="product-tabs">
+                    <div class="tab-content">
+
+                        <div class="modal-dialog modal-confirm">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <div class="icon-box">
+                                        <i class="material-icons">&#xE876;</i>
+                                    </div>
+                                    <h4 class="modal-title">Siparişiniz Alındı!</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <p class="text-center">Siparişiniz onaylanmıştır. Sipariş detayından inceleyebiirsiniz.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- TAB -->
+                        <div role="tabpanel" class="tab-pane active" id="description">
+                            <h6 style="font-weight:600;"> Sipariş Numaranız : @Model.OrderCode </h6>
+                            <h6>Sipariş Durumu : @Model.Status.Name</h6>
+
+
+                            <div class="table-responsive-md" style="margin-top:20px;">
+
+                                <h6 style="font-weight:bold;">SİPARİŞ BİLGİLERİ</h6>
+                                <table class="table shopping-cart-table">
+
+                                    <thead>
+                                        <tr class="shopping-cart-table-header">
+                                            <th hidden></th>
+                                            <th scope="col" rowspan="1">&nbsp;</th>
+                                            <th scope="col" rowspan="1"><span class="nobr">Ürün Adı</span></th>
+                                            <th scope="col" class="a-center" colspan="1"><span class="nobr">Adet</span></th>
+                                            <th scope="col" rowspan="1" class="a-center">Fiyat</th>
+
+                                        </tr>
+                                    </thead>
+                                    @foreach (var item in ViewData["OrderProduct"] as List<TatliGezi.Models.Shop.OrderProduct>)
+                                    {
+
+                                        <tbody>
+                                            <!-- ITEM -->
+                                            <tr class="item">
+                                                <td hidden id="basketID"> @item.ID </td>
+                                                <td class="image">
+                                                    <img class="img-rounded img-responsive">
+                                                    <figure class="image-hover" style="width:30%;">
+                                                        <a href="shop-details.html" class="product-image">
+                                                            <img src="@item.Product.ImageView" style="width:100%;" class="text-center"><img class="img-responsive">
+                                                            <span class="view-text sm">Ürünü Gör</span>
+                                                        </a>
+                                                    </figure>
+                                                </td>
+                                                <td>
+                                                    <h5 class="product-name">
+                                                        <a href="shop-details.html">@item.Product.ProductName</a>
+                                                    </h5>
+                                                </td>
+                                                <td class="a-center">@item.Quantity</td>
+
+                                                @if (item.Product.Discount == 0)
+                                                {
+                                                    <td class="a-center">@item.ProductQuantityDiscountPrice.ToString("##.##") &#8378;</td>
+
+                                                }
+                                                else
+                                                {
+                                                    <td class="a-center">@item.ProductQuantityPrice.ToString("##.##") &#8378;</td>
+
+                                                }
+
+
+                                            </tr>
+                                            <!-- ITEM -->
+
+                                        </tbody>
+
+                                    }
+
+                                </table>
+                                <div colspan="50" class="a-right pt50">
+
+                                    <a href="/siparisbilgisi/@Model.ID" style="margin-bottom:15px;" class="btn md green">SİPARİŞ DETAYI</a>
+
+                                </div>
+                            </div>
+                            <aside class="widget mb30">
+                                <h4 class="widget-title">TESLİMAT ADRESİ</h4>
+                                <div class="inner">
+                                    <p>@Model.UserAdress.Title</p>
+                                    <p>@Model.UserAdress.AdressDetail</p>
+                                    <p>@Model.UserAdress.Town.TownName @Model.UserAdress.City.CityName</p>
+                                </div>
+                            </aside>
+
+
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </form>
+
+        </div>
+
+    </div>
+    <!-- SOPPING CART -->
+    <!-- SHIPPING DETAILS -->
+
+</div>
+
+<!-- ========== FOOTER ========== -->
+@Html.Partial("_Footer", Model)
+
+
+<!-- ========== BACK TO TOP ========== -->
+<div id="back-to-top">
+    <i class="fa fa-angle-up" aria-hidden="true"></i>
+</div>
+
+
+
+@section js{
+    <script>
+        $("input[type=checkbox][name=selectedBranches]:first").attr('checked', 'checked');
+
+    </script>
+}
+
+

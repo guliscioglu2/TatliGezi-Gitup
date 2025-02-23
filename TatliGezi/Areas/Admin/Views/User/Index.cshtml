@@ -1,0 +1,76 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+
+@model List<TatliGezi.Models.User>
+
+<link href="/Content/Admin1/plugins/datatables/dataTables.bootstrap.css" rel="stylesheet" />
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header">Kullanıcı Listesi</h1>
+    </div>
+    <!-- /.col-lg-12 -->
+</div>
+<!-- /.row -->
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+
+            <!-- /.panel-heading -->
+            <div class="panel-body">
+                <div class="dataTable_wrapper">
+                    <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                        <thead>
+                            <tr>
+                                <th>Adı</th>
+                                <th>Soyadı</th>
+                                <th>Mail Adresi</th>
+
+                                <th>İşlemler</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr id="a_@item.ID">
+                                    @*<td>@item.Name</td>*@
+                                    @*<td>@item.Surname</td>*@
+                                    <td>@item.Email</td>
+
+                                    <td>@*<a href="/Admin/User/UserEdit/@item.ID" style="font-size:x-large" title="Düzenle"><i class="fa fa-pencil"></i></a>*@  <a style="font-size:x-large;cursor:pointer" title="Sil" onclick="sil('/User/Delete/',@item.ID)"><i class="fa fa-eraser"></i></a></td>
+
+                                </tr>
+                            }
+
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /.table-responsive -->
+
+            </div>
+            <!-- /.panel-body -->
+        </div>
+        <!-- /.panel -->
+    </div>
+    <!-- /.col-lg-12 -->
+</div>
+<script src="~/Content/Admin1/vendor/jquery/jquery.min.js"></script>
+<script src="~/Content/Admin1/vendor/bootstrap/js/bootstrap.min.js"></script>
+
+<script src="~/Content/Admin1/vendor/datatables/jquery.dataTables.js"></script>
+<script src="~/Content/Admin1/vendor/datatables/dataTables.bootstrap4.js"></script>
+
+<script src="~/Scripts/Delete.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $('#dataTables-example').dataTable({
+            responsive: true
+        });
+    });
+
+</script>
+

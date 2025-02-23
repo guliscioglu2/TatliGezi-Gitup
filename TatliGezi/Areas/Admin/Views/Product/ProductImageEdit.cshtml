@@ -1,0 +1,120 @@
+﻿
+@{
+    ViewBag.Title = "ProductImageEdit";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+@model List<TatliGezi.Models.Shop.ProductImage>
+
+<style>
+    input[type=text], select {
+        width: 40%;
+        padding: 12px 20px;
+        margin: 8px 0;
+        display: inline-block;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+</style>
+@using (Html.BeginForm("UploadFileSample", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-10">
+
+                            @foreach (var item in Model)
+                            {
+
+                                <div class="form-group" id="ResimEkleme">
+                                    <div class="Cvp">
+                                        <label>Resim:</label>
+                                        <img src="@item.PhotoPath" width="60" />
+
+                                        <input type="text" class="iID" id="iID" value="@item.ID">
+
+                                        <input type="file" class="CvpImage">
+
+                                    </div>
+                                        @*<label>Resim:</label>
+
+                    <img src="@item.PhotoPath" width="60" />
+
+                    <input class="imageID" name="imageID" type="hidden" value="@item.ID">
+
+                    <input type="file" name="resim" class="resim" />*@
+
+                                    </div>
+
+                                }
+                            <input type="button" id="btnImageSave" class="btn btn-info btn blok " value="Kaydet">
+
+
+
+                        </div>
+                        </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+
+}
+
+
+@section js{
+    <script>
+        $('#btnImageSave').click(function () {
+
+
+            var _FormData = new FormData();
+
+
+            var _Items = $('#ResimEkleme .Cvp');
+
+
+            for (var i = 0; i < _Items.length; i++) {
+
+                var _Image = $(_Items[i]).find('input[type="file"]').get(0);
+
+                var _id = $(_Items[i]).find('.iID').val();
+
+                if (_Image.files.length > 0)
+
+                    _FormData.append(_id, _Image.files[0]);
+                else {
+                    alert("Lütfen resimleri doldurunuz!!")
+                    error.call("hata");
+                }
+
+
+            }
+
+            $.ajax({
+                url: '/Admin/Product/ProductImageEdit',
+                type: "POST",
+                contentType: false,
+                processData: false,
+                data: _FormData,
+                success: function (result) {
+                    if (result == "")
+                        alert('Resimler Kaydedildi');
+                    window.location.href = "/Admin/Product/Index/";
+
+
+                },
+                error: function (err) {
+                    //MessageBox(err.statusText);
+                }
+            });
+
+        })
+
+    </script>
+}
+

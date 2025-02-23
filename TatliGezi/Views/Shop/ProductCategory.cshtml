@@ -1,0 +1,245 @@
+﻿
+@{
+    ViewBag.Title = "ProductCategory";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model TatliGezi.Models.MultipleData.MainPage
+@using TatliGezi.SeoSetting
+
+<head>
+    <!-- ========== SEO ========== -->
+    <title>Tatlı Gezi - Ürün Kategorisi</title>
+
+    <meta content="Doğal ürünler kategorisi, tohumlar kategorisi, bahçe malzemeleri kategorisi, ilaçlama malzemeleri kategorisi" name="description">
+    <meta content="Doğal ürünler, bahçe malzemeleri, ilaçlama malzemeleri, tohumlar " name="keywords">
+    <meta content="Gül İşçioğlu" name="author">
+
+</head>
+
+<style>
+    .swal2-popup .swal2-styled.swal2-confirm {
+        background-color: #8ab7ab !important;
+    }
+
+    .box {
+        height: 250px;
+        width: 300px;
+        overflow: hidden;
+    }
+
+    .mywidth {
+        height: 50px;
+        /*        height: 9vw;
+    */ object-fit: cover;
+    }
+</style>
+
+
+    <!-- ========== HEADER ========== -->
+    @Html.Partial("_Header", Model)
+
+        <!-- =========== PAGE TITLE ========== -->
+        <div class="page-title" style="padding:0px;">
+            <div class="container">
+                <div class="inner">
+                    <nav id="main-menu" class="main-menu mobile-menu navbar-collapse">
+
+                        @foreach (var item in Model.cList)
+                        {
+                            <ul class="nav navbar-nav">
+                                <li class="mobile-menu-title" style="display:none;">MENU</li>
+
+                                <li>
+
+                                    <a href="/urunkategorisi/@Seo.EditAdress(@item.CategoryName)">
+                                        <h3>@item.CategoryName</h3>
+
+                                    </a>
+
+                                </li>
+                            </ul>
+                        }
+                    </nav>
+
+                </div>
+            </div>
+        </div>
+        <div class="page-title" style="padding:0px;">
+            <div class="container">
+                <div class="inner">
+                    <ol class="breadcrumb">
+                        <li><a href="/anasayfa/">AnaSayfa</a></li>
+                        <li><a href="/magaza/">Mağaza</a></li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+        <!-- =========== MAIN ========== -->
+<main class="shop">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-9">
+                <div class="row">
+                    @foreach (var item in Model.pList)
+                    {
+                        <div class="col-md-4 col-sm-4">
+                            <div class="shop-item-grid">
+                                <figure class="image-hover">
+
+                                    <a href="/urun/@Seo.EditAdress(@item.ProductName)/">
+
+                                        <img src="@item.ImageView" class="img-responsive box" alt="Image">
+                                        <span class="view-text">İncele</span>
+                                    </a>
+                                    @if (item.Stock != 0)
+                                    {
+                                        <button class="btn sm green add-to-cart addBasket" data-pID="@item.ID" data-toggle="modal" data-target="#myModal">
+                                            Sepete Ekle
+                                        </button>
+                                    }
+                                    else
+                                    {
+                                        <span class="btn sm pink add-to-cart addBasket">TÜKENDİ</span>
+
+                                    }
+
+                                </figure>
+                                <div class="product-inner">
+                                    <h3 class="product-title mywidth"><a href="/urun/@Seo.EditAdress(@item.ProductName)/">@item.ProductName</a></h3>
+
+                                    <h5 class="product-title" style=" margin-top: 26px; font-style: italic;"><a @*href="/urun/@Seo.EditAdress(@item.ProductName)/"*@>@item.Brand</a></h5>
+
+                                    @if (item.Discount == 0)
+                                    {
+                                        <div class="product-price">
+                                            <span class="product-price simge-tl"> @item.ProductPrice.ToString("##.##") &#8378;</span>
+                                        </div>
+                                    }
+                                    else
+                                    {
+
+                                        <div class="product-price">
+                                            <span class="product-price-del"><del>@item.ProductPrice.ToString("##.##") &#8378;</del></span>
+                                            <span class="product-price">@item.ProductDiscountPrice.ToString("##.##") &#8378;</span>
+                                            <span class="btn sm pink">%@item.Discount.ToString("##") İNDİRİM</span>
+
+                                        </div>
+                                    }
+
+
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+
+                </div>
+
+
+
+
+
+            </div>
+            <!-- SIDEBAR -->
+            <div class="col-md-3">
+                <!-- WIDGET -->
+                <aside class="widget mb30">
+                    <div class="sidebar-search">
+                        <form method="get" class="widget_search">
+                            <input type="search" class="form-control" placeholder="Search">
+                            <button type="submit">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </form>
+                    </div>
+                </aside>
+                <!-- WIDGET -->
+                <aside class="widget mb30">
+                    <h4 class="widget-title">ÜRÜN KATEGORİSİ</h4>
+                    <div class="inner">
+                        <ul class="categories">
+                            @foreach (var item in ViewData["ProductCategory"] as IList<TatliGezi.Models.Shop.ProductCategory>)
+                            {
+                                <li><a href="/urunkategorisi/@Seo.EditAdress(@item.CategoryName)">@item.CategoryName<span class="pull-right">@*13*@</span></a></li>
+
+                            }
+
+                        </ul>
+                    </div>
+                </aside>
+
+            </div>
+        </div>
+    </div>
+</main>
+
+
+    <!-- ========== FOOTER ========== -->
+    @Html.Partial("_Footer", Model)
+
+
+    <!-- ========== BACK TO TOP ========== -->
+    <div id="back-to-top">
+        <i class="fa fa-angle-up" aria-hidden="true"></i>
+    </div>
+
+
+    
+
+
+    <link href="~/Content/sweetalertexample-master/sweetalert2.min.css" rel="stylesheet" />
+
+    @section js{
+
+        <script src="~/Content/sweetalertexample-master/sweetalert2.min.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+        <script>
+            $(function () {
+
+
+                $(".addBasket").on("click", function () {
+
+
+                    var pid = $(this).attr("data-pID");
+                    $.post("/Basket/AddProduct?productID=" + pid + "&quantity=1", function (data) {
+
+                        var stockAlert = data.Alert;
+
+                        if (stockAlert !== null) {
+
+
+                            alert(data.Alert);
+
+                        }
+                        else {
+                            Swal.fire(
+                                'Tebrikler!',
+                                'Ürününüz sepete eklenmiştir!',
+                                'success'
+                            )
+                            setTimeout(function () {
+                                window.location.reload(1);
+                            }, 2500);
+                        }
+
+                    });
+
+
+                    return false;
+
+                });
+
+            });
+
+        </script>
+
+
+        
+    }
+
+
+
+
+

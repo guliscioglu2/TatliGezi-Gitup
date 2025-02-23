@@ -1,0 +1,186 @@
+﻿
+@{
+    ViewBag.Title = "Contact";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+@model TatliGezi.Models.Message
+
+
+<head>
+
+    <!-- ========== SEO ========== -->
+    <title>Tatlı Gezi - İletişim</title>
+    <meta content="Kullanıcı iletişim bilgileri, mesaj gönderme ve sorular" name="description">
+    <meta content="iletişim, mesaj, sorlar" name="keywords">
+    <meta content="" name="author">
+
+</head>
+
+
+<style>
+    main {
+        padding: 20px 0 !important;
+    }
+    div.c {
+        width: 88%;
+        padding-left: 12%;
+        text-align: center;
+    }
+</style>
+
+<!-- ========== HEADER ========== -->
+@Html.Partial("_Header", Model)
+
+
+<!-- =========== PAGE TITLE ========== -->
+<div class="page-title">
+    <div class="container">
+        <div class="inner">
+            <h1>Bize Ulaşın</h1>
+            <ol class="breadcrumb">
+                <li><a href="/anasayfa/">AnaSayfa</a></li>
+                <li>Bize Ulaşın</li>
+            </ol>
+        </div>
+    </div>
+</div>
+
+<!-- =========== MAIN ========== -->
+<main id="contact-page">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3090.860594541076!2d26.77365718356548!3d39.22333171540978!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14ba7321ae95b045%3A0xff77aa03df15ceab!2zQWx0xLFub3ZhLCDEsG7Dtm7DvCBDZC4gTm86MzcsIDEwNDAwIEF5dmFsxLFrL0JhbMSxa2VzaXI!5e0!3m2!1str!2str!4v1612964496831!5m2!1str!2str" width="100%" height="450" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+
+            </div>
+            <div class="col-md-12 c">
+
+                <h5 style="font-weight: bold; line-height: 1.6;"> Sorunuz, yorumunuz ya da özel bir talebiniz mi var? Ürünler hakkında daha detaylı bilgi içinbize ulaşa bilirsiniz.</h5>
+
+                <h5 style=" font-weight: bold;line-height: 1.6;">
+                    <img src="~/Images/mail (1).png" /> : info@tatligezi.com
+                </h5>
+
+                <h5 style=" font-weight: bold;line-height: 1.6;"> <img src="~/Images/phone-call (1).png" /> : <a href="tel:+902663382290"> 0266-338-22-90</a> </h5>
+
+                <h5 style=" font-weight: bold;line-height: 1.6;"> <img src="~/Images/smartphone.png" /> : <a href="tel:+902663382290"> 0543-804-81-28</a>    </h5>
+
+            </div>
+        </div>
+
+        @*<div class="post-category mb30">
+            <p>
+                Sorunuz, yorumunuz ya da özel bir talebiniz mi var? Ürünler hakkında daha detaylı bilgi içinbize ulaşa bilirsiniz.
+            </p>
+        </div>*@
+
+        <div class="alert alert-success" style='display:none' id='successMessage'>
+            <strong>Başarılı!</strong> Mesajınız bize iletildi.
+        </div>
+        <div class="alert alert-danger" style='display:none' id='errorMessage'>
+            <strong>Başarısız!</strong> Mesajınız gönderilirken bir sorun yaşandı.
+        </div>
+
+
+        <form id="contact-form" method="post">
+            <div class="row">
+                <div class="col-md-6">
+
+
+                    @Html.TextBoxFor(x => x.Name, new { placeholder = "İSİM", @id = "name", @class = "form-control", type = "text", name = "name", @data_val = "true", @required = true })
+                    <div class="text-danger" id="nameMessage" style="display:none;">Lütfen adınızı giriniz.</div>
+
+                    @Html.TextBoxFor(x => x.Mail, new { placeholder = "MAİL", @id = "mail", @class = "form-control", type = "email", name = "email", @data_val = "true", @required = "required" })
+                    @*@Html.ValidationMessageFor(x => x.Mail, "Lütfen mail adresinizi giriniz.", new { @class = "text-danger" })*@
+                    <div class="text-danger" id="mailMessage" style="display:none;">Lütfen mail adresinizi giriniz.</div>
+
+
+                    @Html.TextBoxFor(x => x.Phone, new { placeholder = "TELEFON", @id = "phone", @class = "form-control lnr lnr-user", type = "text", name = "phone", @data_val = "true", @required = "required" })
+                    <div class="text-danger" id="phoneMessage" style="display:none;">Lütfen telefon numaranızı giriniz.</div>
+                </div>
+                <div class="col-md-6">
+                    @Html.TextAreaFor(x => x.MessageContent, new { placeholder = "MESAJINIZ", @id = "content", @class = "form-control", name = "MessageContent", @data_val = "true", @required = "required" })
+                    <div class="text-danger" id="contentMessage" style="display:none;">Lütfen mesajınızı giriniz.</div>
+                </div>
+                <div class="col-md-12">
+                    <button id="sendMessage" type="button" class="btn pull-right">Gönder</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</main>
+
+<!-- ========== FOOTER ========== -->
+@Html.Partial("_Footer", Model)
+
+
+<!-- ========== BACK TO TOP ========== -->
+<div id="back-to-top">
+    <i class="fa fa-angle-up" aria-hidden="true"></i>
+</div>
+
+
+@*<input name="UserName" disabled readonly value=@Html.DisplayTextFor(model => model.Mail)>*@
+
+
+
+@section js{
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $('#sendMessage').click(function () {
+
+                if ($("#name").val() != "" && $("#mail").val() != "" && $("#phone").val() != "" && $("#content").val() != "")
+                {
+
+                    $.ajax({
+                        url: '/iletisim/',
+                        type: 'POST',
+                        data: $('#contact-form').serialize(),
+                        success: function (data) {
+                            if (data.result.Success == "true") {
+                                //window.location.href = "/İletişim/";
+                                $('#successMessage').show();
+                                $("#name").val("");
+                                $("#mail").val("");
+                                $("#phone").val("");
+                                $("#content").val(""); 
+                                //    $(this).parents('.inputBtn').remove();
+                            }
+                            else {
+                                $('#errorMessage').show();
+
+                            }
+                        }
+                    });
+                }
+                else
+                {
+                    if ($("#name").val() == "")
+                    {
+                        $("#nameMessage").show()
+                    }
+                    if ($("#mail").val() == "")
+                    {
+                        $("#mailMessage").show()
+                    }
+                    if ($("#phone").val() == "")
+                    {
+                        $("#phoneMessage").show()
+
+                        if ($("#content").val() == "")
+                        {
+                            $("#contentMessage").show()
+                        }
+                    }
+                }
+
+
+            });
+        });
+    </script>
+}

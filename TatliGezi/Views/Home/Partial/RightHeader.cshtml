@@ -1,0 +1,129 @@
+﻿
+@using TatliGezi.SeoSetting
+<!-- WIDGET -->
+@*<aside class="widget nobox">
+    <div class="about-author">
+        <div class="about-author-image">
+            <figure class="image-hover">
+                <a href="/hakkımızda/">
+                    <img src="~/Images/About/backg9.jpg" class="img-responsive" alt="Image" />
+                    <img src="~/Images/About/profil.jpg" class="img-responsive" alt="Image" />
+                    <span class="view-text"> Detayı Gör </span>
+                </a>
+            </figure>
+        </div>
+        <div class="about-author-info">
+            <div class="about-author-info-inner">
+                <h2> Gül İşçioğlu </h2>
+                <span> Yazılım Uzmanı ve Yazar </span>
+                <p> Kendini geliştiren bir yazılımcı ve hayalperest bir yazar. </p>
+            </div>
+        </div>
+        <div class="about-author-info">
+            <div class="about-author-info-inner">
+                <h2> Hakkımızda </h2>
+                <span> Yazılım Uzmanı ve Yazar </span>
+                <p> Kendini geliştiren bir yazılımcı ve hayalperest bir yazar. </p>
+            </div>
+        </div>
+        <div class="about-author-social-media">
+            <a href="https://www.facebook.com/gul.iscioglu"><i class="fa fa-facebook" data-toggle="tooltip" data-original-title="Follow me on Facebook"></i></a>
+            <a href="https://www.instagram.com/guliscioglu/"><i class="fa fa-instagram" data-toggle="tooltip" data-original-title="Follow me on Instagram"></i></a>
+
+            <a href="https://twitter.com/guliscioglu"><i class="fa fa-twitter" data-toggle="tooltip" data-original-title="Follow me on Twitter"></i></a>
+            <a href="#"><i class="fa fa-google-plus" data-toggle="tooltip" data-original-title="Follow me on Google +"></i></a>
+            <a href="https://www.linkedin.com/in/g%C3%BCl-i%C5%9F%C3%A7io%C4%9Flu-97806274/"><i class="fa fa-linkedin" data-toggle="tooltip" data-original-title="Follow me on Linkedin"></i></a>
+            <a href="#"><i class="fa fa-youtube" data-toggle="tooltip" data-original-title="Follow me on YouTube"></i></a>
+            <a href="/Home/About/" class="btn xs white br pull-right">Daha Fazlası</a>
+        </div>
+    </div>
+</aside>*@
+<!-- WIDGET -->
+<aside class="widget mb30">
+    <div class="sidebar-search">
+        <form method="get" class="widget_search">
+            <input type="search" name="SearchString" class="form-control" placeholder="Arama">
+            <button type="submit">
+                <i class="fa fa-search"></i>
+            </button>
+        </form>
+    </div>
+</aside>
+<!-- WIDGET -->
+<aside class="widget mb30">
+    <h4 class="widget-title">KATEGORİLER</h4>
+    <div class="inner">
+        <ul class="categories">
+            @foreach (var item in ViewData["Category"] as IList<TatliGezi.Models.ArticleCategory>)
+            {
+                <li><a href="/kategori/@Seo.EditAdress(item.CategoryName)">@item.CategoryName</a></li>
+            }
+        </ul>
+    </div>
+</aside>
+<!-- WIDGET -->
+@*<aside class="widget">
+        <h4 class="widget-title"><i class="fa fa-instagram" aria-hidden="true"></i> Galleri / İnstagram </h4>
+        <div class="inner">
+            <div class="instagram-widget">
+                <ul class="list-unstyled">
+                    @foreach (var item in ViewData["Gallery"] as IList<Blog1.Models.Gallery>)
+                    {
+                        <li class="image-hover">
+                            <a href="@item.Url">
+                                <img src="@item.PhotoPath" class="img-responsive" alt="Image">
+                                <span class="view-text sm">Instagram'da Gör</span>
+                            </a>
+                        </li>
+                    }
+
+                </ul>
+            </div>
+        </div>
+    </aside>*@
+<!-- WIDGET -->
+@*<aside class="widget">
+        <h4 class="widget-title">NEWSLETTER</h4>
+        <div class="inner">
+            <div class="newsletter">
+                <p>Enter your email address below to subscribe to my newsletter</p>
+                <form name="subscribe-form">
+                    <div class="form-group">
+                        <input type="email" name="email" class="form-control" placeholder="Enter you email">
+                        <button type="submit" class="btn md pink fw mt30">SUBSCIBE NOW</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </aside>*@
+<!-- WIDGET -->
+<aside class="widget">
+    <h4 class="widget-title"> Son Gönderiler </h4>
+    <div class="inner">
+        <div class="latest-posts">
+
+            @foreach (var item in ViewData["LastList"] as IList<TatliGezi.Models.Article>)
+            {
+                <article class="latest-post">
+                    <figure>
+                        <a href="/blog/@Seo.EditAdress(item.ArticleTitle)">
+                            <img src="@item.PhotoPath1" class="img-responsive fw" alt="Image">
+                        </a>
+                        <figcaption class="details">
+                            <h6 class="title"><a href="/blog/@Seo.EditAdress(item.ArticleTitle)">@item.ArticleTitle</a></h6>
+                            <div class="meta">
+                                <span><a href="/Blog/@Seo.EditAdress(item.ArticleTitle)"><i class="fa fa-commenting-o" aria-hidden="true"></i> @item.ArticleComment.Where(x => x.IsDelete == false).Count() yorum </a></span>
+                            </div>
+                        </figcaption>
+                    </figure>
+                </article>
+            }
+        </div>
+    </div>
+</aside>
+<!-- WIDGET -->
+@*<aside class="widget">
+        <a href="#">
+            <img src="images/banner.png" class="img-responsive" alt="Image">
+        </a>
+    </aside>*@

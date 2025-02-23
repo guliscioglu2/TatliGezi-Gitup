@@ -1,0 +1,55 @@
+﻿
+@{
+    ViewBag.Title = "ComingSoon";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model TatliGezi.Models.Article
+
+<head>
+    <!-- ========== SEO ========== -->
+    @*<title>@Model.ArticleTitle</title>
+
+        <meta content="@Model.MetaDescription" name="description">
+        <meta content="@Model.Keywords" name="keywords">
+        <meta content="@Model.Author" name="author">*@
+
+
+
+</head>
+<!-- ========== HEADER ========== -->
+@Html.Partial("_Header", Model)
+<!-- ========== MAIN ========== -->
+@*<body id="coming-soon" style="        background: url('images/coming-soon.jpg'); display: block; background-size: cover; background-position: center center;">*@
+
+
+    <main>
+        <div class="container">
+            <div class="inner">
+                <img src="~/Images/Slider2/3-n.jpg" />
+                @*<div class="mb20"><img src="~/Images/Logo/logoBlog1-removebg-preview.png" width="150" alt="Logo"></div>*@
+                <h2 class="title">YAKINDA DOĞAL ZEYTİN YAĞLARIMIZLA SİZLERLEYİZ!</h2>
+                <p>Ekibimiz şu anda zeytin yağlarının üretimi için çalışıyor. Yakında sizlere %100 doğal zeytin yağlarını sunacağız.<br>İlginize teşekkür ederiz.</p>
+                @*<form class="search-form mt60">
+            <div class="form-group">
+                <input type="email" name="email" class="form-control" placeholder="Mail adresinizi girin">
+                <button class="btn" type="submit"><i class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
+            </div>
+        </form>*@
+                @*<div id="countdown" class="mt60" data-countdown="2021/07/10"></div>*@
+                @*<h4 class="mt60 upper">Get in Touch</h4>*@
+                @*<div class="social-media">
+            <a class="facebook" href="#" data-toggle="tooltip" data-original-title="Facebook"><i class="fa fa-facebook"></i></a>
+            <a class="twitter" href="#" data-toggle="tooltip" data-original-title="Twitter"><i class="fa fa-twitter"></i></a>
+            <a class="googleplus" href="#" data-toggle="tooltip" data-original-title="Google Plus"><i class="fa fa-google-plus"></i></a>
+            <a class="pinterest" href="#" data-toggle="tooltip" data-original-title="Pinterest"><i class="fa fa-pinterest"></i></a>
+            <a class="linkedin" href="#" data-toggle="tooltip" data-original-title="Linkedin"><i class="fa fa-linkedin"></i></a>
+            <a class="youtube" href="#" data-toggle="tooltip" data-original-title="YouTube"><i class="fa fa-youtube"></i></a>
+            <a class="instagram" href="#" data-toggle="tooltip" data-original-title="Instagram"><i class="fa fa-instagram"></i></a>
+        </div>*@
+            </div>
+        </div>
+    </main>
+
+
+
+

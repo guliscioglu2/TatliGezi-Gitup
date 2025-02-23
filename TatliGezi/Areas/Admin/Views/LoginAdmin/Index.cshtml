@@ -1,0 +1,96 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+
+@{
+    ViewBag.Title = "Index";
+    Layout = null;
+
+}
+@model TatliGezi.DTO.LoginDTO
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>SB Admin - Login</title>
+    <!-- Bootstrap core CSS-->
+    <link href="/Content/Admin1/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom fonts for this template-->
+    <link href="/Content/Admin1/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <!-- Custom styles for this template-->
+    <link href="/Content/Admin1/css/sb-admin.css" rel="stylesheet">
+</head>
+
+<body class="bg-dark">
+    <div class="container">
+        <div class="card card-login mx-auto mt-5">
+            <div class="card-header">Login</div>
+            <div class="card-body">
+                <form @*action="/action_page.php"*@ method="post">
+                    <div class="form-group">
+                        <label>Mail Adresi</label>
+
+                        <div class="form-label-group">
+
+                            @Html.TextBoxFor(x => x.Email, new { @class = "form-control", @placeholder = "Mail Adresinizi Giriniz", required = "required", autofocus = "autofocus" })
+                            @Html.ValidationMessageFor(x => x.Email)
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Şifre</label>
+
+                        <div class="form-label-group">
+
+                            @Html.PasswordFor(x => x.Password, new { @class = "form-control", @placeholder = "Şifrenizi Giriniz", required = "required" })
+                            @Html.ValidationMessageFor(x => x.Password)
+
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="checkbox">
+                            @*<label>
+                                    <input type="checkbox" value="remember-me">
+                                    Remember Password
+                                </label>*@
+                        </div>
+                    </div>
+                    <input type="submit" name="name" class="btn btn-primary btn-block" value="Giriş Yap" />
+
+                </form>
+                <div class="text-center">
+                    <br />
+                    <a class="d-block small" href="/Admin/LoginAdmin/ForgotPassword/">Şifremi Unuttum?</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Bootstrap core JavaScript-->
+    <script src="/Content/Admin1/vendor/jquery/jquery.min.js"></script>
+    <script src="/Content/Admin1/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- Core plugin JavaScript-->
+    <script src="/Content/Admin1/vendor/jquery-easing/jquery.easing.min.js"></script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

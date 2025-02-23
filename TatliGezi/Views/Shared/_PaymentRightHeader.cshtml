@@ -1,0 +1,83 @@
+﻿
+<aside class="widget mb30">
+    <h4 class="widget-title">SİPARİŞ ÖZETİ</h4>
+
+    <div class="inner">
+
+        <ul class="categories">
+
+
+            <li style="border-bottom: none !important;"><a> Ürün Toplamı: <span class="pull-right"> @ViewData["TotalPrice"] &#8378;</span></a></li>
+
+            <li><a>Kargo Toplam: <span class="pull-right"> @ViewData["CargoPrice"] &#8378;</span></a></li>
+
+            <li><a>Toplam: <span class="pull-right"> @ViewData["TotalPayment"] &#8378;</span></a></li>
+
+        </ul>
+
+        <div colspan="50" class="a-right pt50" style=" padding-top: 30px; margin-bottom: 30px;">
+
+            @if (Request.Cookies["Member"] == null)
+            {
+                <a href="/GirisYap" class="btn md green">SEPETİ ONAYLA</a>
+
+            }
+            else
+            {
+                if (ViewData["Adress"] != null)
+                {
+                    <a href="/adresbilgisi" class="btn md green">SEPETİ ONAYLA</a>
+
+                }
+                else
+                {
+                    <a href="/adresekle" class="btn md green">SEPETİ ONAYLA</a>
+                }
+
+
+            }
+
+
+
+        </div>
+    </div>
+
+</aside>
+@*<aside class="widget mb30" style="margin-top:85px;">
+        <h4 class="widget-title">SİPARİŞ ÖZETİ</h4>
+        <div class="inner">
+            <ul class="categories">
+
+                <li style="border-bottom: none !important;"><a>Ürün Toplamı: <span class="pull-right"> @ViewData["TotalPrice"] &#8378;</span></a></li>
+                <li><a>Kargo Toplam: <span class="pull-right">@ViewData["CargoPrice"] &#8378;</span></a></li>
+                <li><a>Toplam: <span class="pull-right"> @ViewData["TotalPayment"] &#8378;</span></a></li>
+
+            </ul>
+            <div colspan="50" class="a-right pt50" style=" padding-top: 30px; margin-bottom: 30px;">
+                @if (Session["Basket"] != null)
+                {
+
+                    if (ViewData["Adress"] != null)
+                    {
+                        <a href="/AdresBilgisi" class="btn md green">Sepeti Onayla</a>
+
+                    }
+                    else
+                    {
+                        <a href="/AdresEkle" class="btn md green">Sepeti Onayla</a>
+                    }
+
+
+
+
+                }
+
+            </div>
+        </div>
+
+    </aside>*@
+<figure class="image-hover">
+
+    <img src="~/Images/shop/indir.png" class="img-responsive" alt="Image" />
+
+</figure>

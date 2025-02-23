@@ -1,0 +1,128 @@
+﻿
+
+@model TatliGezi.Models.MultipleData.ArticleAdd
+
+
+
+
+<div class="row">
+    <div class="col-lg-12">
+        @if (Model.article != null)
+        {
+            <h1 class="page-header">Makale Düzenleme Formu</h1>
+        }
+        else
+        {
+            <h1 class="page-header">Makale Ekleme Formu</h1>
+        }
+
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            @if (ViewBag.Durum == -1)
+            {
+                <div class="alert alert-danger">Ooopsss!...Lütfen Gerekli Alanları Doldurunuz.</div>
+            }
+
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-lg-6">
+                        @using (Html.BeginForm(null, null, FormMethod.Post, new { @enctype = "multipart/form-data" }))
+                        {
+
+                            <div class="form-group">
+                                <label>Başlık</label>
+                                @Html.TextBoxFor(x => x.article.ArticleTitle, new { id = "Title" })
+                                @Html.HiddenFor(x => x.article.ID, new { id = "ID" })
+                            </div>
+                            <div class="form-group">
+                                <label>Kategori Seçiniz</label>
+                                @Html.DropDownList("CategoryList", (List<SelectListItem>)ViewData["Category"], new { @class = "form-control", id = "Category" })
+                            </div>
+                            <div class="form-group">
+                                <label>Resim:</label>
+                                <input type="file" name="resim" id="resim" />
+                            </div>
+                            <div class="form-group">
+                                <label>Müzik:</label>
+                                <input type="file" name="music" id="music" />
+                            </div>
+
+
+
+                            <div class="form-group">
+                                <label>İçerik</label>
+                                @Html.TextAreaFor(x => x.article.ArticleContent, new { id = "Content" })
+                            </div>
+
+                            if (Model.article != null)
+                            {
+                                <input type="submit" name="command" class="btn btn-primary" value="Kaydet" />
+                                <input type="submit" name="command" class="btn btn-info" value="Ön izleme" />
+                            }
+                            else
+                            {
+                                <input type="submit" name="command" class="btn btn-primary" value="Yayınla" />
+                                <input type="submit" name="command" class="btn btn-info" value="Ön izleme" />
+                                <input type="submit" name="command" class="btn btn-default" value="Taslak Olarak Kaydet" />
+                            }
+
+
+                        }
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+    function copyToClipboard(element) {
+        var $temp = $("<input>");
+        $("body").append($temp);
+        $temp.val($(element).text()).select();
+        document.execCommand("copy");
+        $temp.remove();
+    }
+</script>
+
+@*<script>
+
+        $("#preview").click(function () {
+
+            var mess = new Object();
+            mess.Title = $('#Title').val();
+            mess.Title = $('#resim').val();
+
+            mess.Title = $('#Content').val();
+
+            mess.Title = $('#Mini').val();
+
+            mess.Title = $('#ID').val();
+
+            mess.Title = $('#Title').val();
+
+
+
+            $.ajax({
+                type: 'POST',
+                url: '/Admin/Article/ArticlePreview',
+                data: mess,
+
+                success: function (data) {
+
+
+                },
+                error: function (data) {
+                }
+
+            })
+        })
+
+
+    </script>*@
